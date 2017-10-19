@@ -2,103 +2,67 @@
 
 namespace app\models;
 
-class User extends \yii\base\Object implements \yii\web\IdentityInterface
+use Yii;
+
+/**
+ * This is the model class for table "user".
+ *
+ * @property integer $idUser
+ * @property string $name
+ * @property string $lastName
+ * @property string $mail
+ * @property string $password
+ * @property integer $phone
+ * @property double $Tarifa
+ *
+ * @property Proto[] $protos
+ */
+class User extends \yii\db\ActiveRecord
 {
-    public $id;
-    public $username;
-    public $password;
-    public $authKey;
-    public $accessToken;
-
-    private static $users = [
-        '100' => [
-            'id' => '100',
-            'username' => 'admin',
-            'password' => 'admin',
-            'authKey' => 'test100key',
-            'accessToken' => '100-token',
-        ],
-        '101' => [
-            'id' => '101',
-            'username' => 'demo',
-            'password' => 'demo',
-            'authKey' => 'test101key',
-            'accessToken' => '101-token',
-        ],
-    ];
-
-
     /**
      * @inheritdoc
      */
-    public static function findIdentity($id)
+    public static function tableName()
     {
-        return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
+        return 'user';
     }
 
     /**
      * @inheritdoc
      */
-    public static function findIdentityByAccessToken($token, $type = null)
+    public function rules()
     {
-        foreach (self::$users as $user) {
-            if ($user['accessToken'] === $token) {
-                return new static($user);
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * Finds user by username
-     *
-     * @param string $username
-     * @return static|null
-     */
-    public static function findByUsername($username)
-    {
-        foreach (self::$users as $user) {
-            if (strcasecmp($user['username'], $username) === 0) {
-                return new static($user);
-            }
-        }
-
-        return null;
+        return [
+            [['mail', 'Tarifa'], 'required'],
+            [['phone'], 'integer'],
+            [['Tarifa'], 'number'],
+            [['name', 'lastName', 'mail', 'password'], 'string', 'max' => 45],
+            [['mail'], 'unique'],
+            [['phone'], 'unique'],
+        ];
     }
 
     /**
      * @inheritdoc
      */
-    public function getId()
+    public function attributeLabels()
     {
-        return $this->id;
+        return [
+            'idUser' => 'Id User',
+            'name' => 'Name',
+            'lastName' => 'Last Name',
+            'mail' => 'Mail',
+            'password' => 'Password',
+            'phone' => 'Phone',
+            'Tarifa' => 'Tarifa',
+        ];
     }
 
     /**
-     * @inheritdoc
+     * @return \yii\db\ActiveQuery
      */
-    public function getAuthKey()
+    public function getProtos()
     {
-        return $this->authKey;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function validateAuthKey($authKey)
-    {
-        return $this->authKey === $authKey;
-    }
-
-    /**
-     * Validates password
-     *
-     * @param string $password password to validate
-     * @return bool if password provided is valid for current user
-     */
-    public function validatePassword($password)
-    {
-        return $this->password === $password;
+        return $this->hasMany(Proto::className(), ['user_idUser' => 'idUser']);
     }
 }
