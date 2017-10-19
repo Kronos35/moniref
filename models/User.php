@@ -17,7 +17,7 @@ use Yii;
  *
  * @property Proto[] $protos
  */
-class User extends \yii\db\ActiveRecord
+class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
     /**
      * @inheritdoc
@@ -64,5 +64,34 @@ class User extends \yii\db\ActiveRecord
     public function getProtos()
     {
         return $this->hasMany(Proto::className(), ['user_idUser' => 'idUser']);
+    }
+
+    public static function findByUsername($name){
+        return User::findOne(["mail"=>$name]);
+    }
+
+    public function validatePassword($pass){
+        return $this->password === $pass;
+    }
+
+    public static function findIdentity($id)
+    {
+        return static::findOne($id);
+    }
+    public static function findIdentityByAccessToken($token, $type = null)
+    {
+        return static::findOne(['access_token' => $token]);
+    }
+    public function getId()
+    {
+        return $this->idUser;
+    }
+    public function getAuthKey()
+    {
+        return "Sepa la wea + random " . rand();//$this->authKey;
+    }
+    public function validateAuthKey($authKey)
+    {
+        return $this->authKey === $authKey;
     }
 }
