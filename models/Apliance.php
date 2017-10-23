@@ -33,8 +33,7 @@ class Apliance extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idApliance'], 'required'],
-            [['idApliance', 'elecType_idElecType'], 'integer'],
+            [['elecType_idElecType'], 'integer'],
             [['Marca', 'Modelo'], 'string', 'max' => 45],
             [['elecType_idElecType'], 'exist', 'skipOnError' => true, 'targetClass' => Electype::className(), 'targetAttribute' => ['elecType_idElecType' => 'idElecType']],
         ];

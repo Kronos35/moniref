@@ -1,6 +1,8 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
+use app\models\Electype;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
@@ -11,10 +13,11 @@ use yii\widgets\ActiveForm;
 <div class="apliance-form">
 
     <?php $form = ActiveForm::begin(); ?>
-
-    <?= $form->field($model, 'idApliance')->textInput() ?>
-
-    <?= $form->field($model, 'elecType_idElecType')->textInput() ?>
+    <?php 
+    	// mover esta linea al controlador //
+    	$items = ArrayHelper::map(Electype::find()->all(), 'idElecType', 'Nombre'); 
+    ?>
+    <?= $form->field($model, 'elecType_idElecType')->dropDownList($items); ?>
 
     <?= $form->field($model, 'Marca')->textInput(['maxlength' => true]) ?>
 

@@ -28,8 +28,6 @@ class Electype extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idElecType'], 'required'],
-            [['idElecType'], 'integer'],
             [['Nombre'], 'string', 'max' => 45],
         ];
     }

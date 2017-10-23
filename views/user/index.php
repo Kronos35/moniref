@@ -13,6 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?php echo Html::a("Actualizar perfil", array("/user/update"),array("class"=>"btn btn-default")); ?>
-    <?php echo Html::a("Ver dispositivos", array("/protoe/index"),array("class"=>"btn btn-default")); ?>
-    <?php echo Html::a("Ver electrodomésticos", array("/apliance/index"),array("class"=>"btn btn-default")); ?>
+    <?php echo Html::a("Ver dispositivos", array("/proto/index"),array("class"=>"btn btn-default")); ?>
+    <?php echo Html::a("Ver consumo", array("/consumptionregistry/index"),array("class"=>"btn btn-default")); ?>
+
 </div>

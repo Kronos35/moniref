@@ -32,8 +32,8 @@ class Consumptionregistry extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idConsumption', 'apliance_idApliance', 'watts', 'amps', 'volts', 'date'], 'required'],
-            [['idConsumption', 'apliance_idApliance'], 'integer'],
+            [['apliance_idApliance', 'watts', 'amps', 'volts', 'date'], 'required'],
+            [['apliance_idApliance'], 'integer'],
             [['watts', 'amps', 'volts'], 'number'],
             [['date'], 'safe'],
             [['apliance_idApliance'], 'exist', 'skipOnError' => true, 'targetClass' => Apliance::className(), 'targetAttribute' => ['apliance_idApliance' => 'idApliance']],

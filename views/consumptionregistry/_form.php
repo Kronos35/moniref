@@ -12,8 +12,6 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'idConsumption')->textInput() ?>
-
     <?= $form->field($model, 'apliance_idApliance')->textInput() ?>
 
     <?= $form->field($model, 'watts')->textInput() ?>
