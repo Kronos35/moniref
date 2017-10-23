@@ -12,8 +12,6 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'idElecType')->textInput() ?>
-
     <?= $form->field($model, 'Nombre')->textInput(['maxlength' => true]) ?>
 
     <div class="form-group">

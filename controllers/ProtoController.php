@@ -4,15 +4,16 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Proto;
+use app\models\ProtoHasApliance;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * ProtoeController implements the CRUD actions for Proto model.
+ * ProtoController implements the CRUD actions for Proto model.
  */
-class ProtoeController extends Controller
+class ProtoController extends Controller
 {
     /**
      * @inheritdoc
@@ -49,10 +50,22 @@ class ProtoeController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
-    {
+    public function actionView($id){
+
+        $model2 = ProtoHasApliance::findOne(["Proto_idProto"=>$id]);
+
+        if(!$model2){
+            $model2 = new ProtoHasApliance();
+        }
+        $model2->Proto_idProto = $id;
+        
+        if(Yii::$app->request->post()){
+            $model2->load(Yii::$app->request->post());
+            $model2->save();
+        }
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'model2' => $model2
         ]);
     }
 
@@ -64,6 +77,7 @@ class ProtoeController extends Controller
     public function actionCreate()
     {
         $model = new Proto();
+        $model->user_idUser = Yii::$app->user->id;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->idProto]);
@@ -113,8 +127,7 @@ class ProtoeController extends Controller
      * @return Proto the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
-    protected function findModel($id)
-    {
+    protected function findModel($id){
         if (($model = Proto::findOne($id)) !== null) {
             return $model;
         } else {

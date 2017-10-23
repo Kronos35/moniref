@@ -32,7 +32,7 @@ class Proto extends \yii\db\ActiveRecord
     {
         return [
             [['idProto', 'user_idUser'], 'required'],
-            [['idProto', 'user_idUser'], 'integer'],
+            [['idProto', 'user_idUser'], 'integer', 'max' => 999999999],
             [['password'], 'string', 'max' => 45],
             [['user_idUser'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_idUser' => 'idUser']],
         ];

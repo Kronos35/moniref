@@ -31,8 +31,8 @@ class ProtoHasApliance extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['Proto_idProto', 'apliance_idApliance'], 'required'],
-            [['Proto_idProto', 'apliance_idApliance'], 'integer'],
+            [['apliance_idApliance'], 'required'],
+            [['apliance_idApliance'], 'integer'],
             [['connectionDate', 'disconnectionDate'], 'safe'],
             [['Proto_idProto'], 'exist', 'skipOnError' => true, 'targetClass' => Proto::className(), 'targetAttribute' => ['Proto_idProto' => 'idProto']],
             [['apliance_idApliance'], 'exist', 'skipOnError' => true, 'targetClass' => Apliance::className(), 'targetAttribute' => ['apliance_idApliance' => 'idApliance']],

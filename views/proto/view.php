@@ -1,7 +1,10 @@
 <?php
 
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
+use app\models\Apliance;
 use yii\widgets\DetailView;
+use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Proto */
@@ -33,5 +36,22 @@ $this->params['breadcrumbs'][] = $this->title;
             'password',
         ],
     ]) ?>
+
+    <div class="proto-has-apliance-form">
+        <?php $form = ActiveForm::begin(); ?>
+        <?php 
+            // esta linea debe irse al controlador //
+            $items = ArrayHelper::map(Apliance::find()->all(), 'idApliance', 'idApliance');
+        ?>
+        
+        <?= $form->field($model2, 'apliance_idApliance')->dropDownList($items) ?>
+        <?= $form->field($model2, 'connectionDate')->textInput() ?>
+        <?= $form->field($model2, 'disconnectionDate')->textInput() ?>
+
+        <div class="form-group">
+            <?= Html::submitButton($model2->isNewRecord ? 'Create' : 'Update', ['class' => $model2->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+        </div>
+        <?php ActiveForm::end(); ?>
+    </div>
 
 </div>
