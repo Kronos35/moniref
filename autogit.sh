@@ -1,5 +1,4 @@
 #!/bin/bash
-
 git add -A;
 read -rsp $'Press enter to continue...\n'
 git commit -m "UPDATE";
