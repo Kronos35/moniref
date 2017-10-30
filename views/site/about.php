@@ -11,6 +11,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?php echo Html::jsFile('@web/js/Chart.bundle.js'); ?>
+    <?php 
+
+	
+    $consumption = Yii::$app->db->createCommand('SELECT * FROM user')->queryAll();?>
+
 
     <div class="col-md-offset-4 col-md-3">
     	<div id="canvas-holder">
