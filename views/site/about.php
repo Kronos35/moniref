@@ -13,9 +13,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?php 
         echo Html::jsFile('@web/js/Chart.bundle.js'); 
-        $consumptionWatts = Yii::$app->db->createCommand('SELECT * FROM user')->queryAll();
     ?>
 <?php 
+    $consumptionWatts = Yii::$app->db->createCommand('SELECT * FROM user')->queryAll();
 	// clase de charts //
 	// requiere llamar esto: "use app\assets\Charts;" //
 
