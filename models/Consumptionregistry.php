@@ -62,4 +62,8 @@ class Consumptionregistry extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Apliance::className(), ['idApliance' => 'apliance_idApliance']);
     }
+
+    public function getUserId(){
+        return Apliance::findOne(["idApliance"=>$this->apliance_idApliance])->userId;
+    }
 }

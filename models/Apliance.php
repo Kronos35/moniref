@@ -83,4 +83,8 @@ class Apliance extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Proto::className(), ['idProto' => 'Proto_idProto'])->viaTable('proto_has_apliance', ['apliance_idApliance' => 'idApliance']);
     }
+
+    public function getUserId(){
+        return ProtoHasApliance::findOne(["apliance_idApliance"=>$this->idApliance])->userId;
+    }
 }

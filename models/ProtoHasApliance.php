@@ -67,4 +67,8 @@ class ProtoHasApliance extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Apliance::className(), ['idApliance' => 'apliance_idApliance']);
     }
+
+    public function getUserId(){
+        return Proto::findOne(["idProto"=>$this->Proto_idProto])->userId;
+    }
 }
