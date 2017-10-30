@@ -10,18 +10,14 @@ $this->title = 'About';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-<<<<<<< HEAD
-    <?php echo Html::jsFile('@web/js/Chart.bundle.js'); ?>
+
     <?php 
-
-	
-    $consumption = Yii::$app->db->createCommand('SELECT * FROM user')->queryAll();?>
-
-=======
+        echo Html::jsFile('@web/js/Chart.bundle.js'); 
+        $consumptionWatts = Yii::$app->db->createCommand('SELECT * FROM user')->queryAll();
+    ?>
 <?php 
 	// clase de charts //
 	// requiere llamar esto: "use app\assets\Charts;" //
->>>>>>> 276daf83db03e79faa89117483de0276c33a9ca3
 
 	// el constructor pide charts (array(clave=>valor)) de datos, $string parametros (aquí va el col-md-5 o esas weas) y finalmente un bool random o no random (true = random)
 	$charts = new Charts(["data1"=>1,"data2"=>9, "potato"=>50, "data3"=>13,"data4"=>8, "potato2"=>25],"col-md-4",false);
