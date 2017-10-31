@@ -37,7 +37,6 @@ class Watts{
             GROUP BY
                 a.idApliance
         ')->queryAll();
-
     }
 
 	public function setOptionClass($optionclass){
