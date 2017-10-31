@@ -5,9 +5,6 @@ use yii\helpers\Html;
 
 
 class Watts{
-	private $sum;
-	private $avg;
-	private $optn;
 	private $result;
 	//Valid inputs 'a', 's' only
 	function __construct($initOptn, $startDate, $endDate) {
@@ -40,7 +37,7 @@ class Watts{
             GROUP BY
                 a.idApliance
         ')->queryAll();
-        
+
     }
 
 	public function setOptionClass($optionclass){
