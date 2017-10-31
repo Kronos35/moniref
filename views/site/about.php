@@ -5,48 +5,19 @@
 use yii\helpers\Html;
 use app\models\Consumptionregistry;
 use app\assets\Charts;
+use app\assets\Consumption;
 
 $this->title = 'About';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <?php 
-    $consumptionWatts = Yii::$app->db->createCommand('
-            SELECT
-                a.idApliance,
-                AVG(cr.watts)
-            FROM
-                consumptionregistry cr
-            INNER JOIN
-                apliance a
-            ON
-                a.idApliance = cr.apliance_idApliance
-            INNER JOIN
-              proto_has_apliance phs
-            ON
-                phs.apliance_idApliance = a.idApliance
-            INNER JOIN
-                proto p
-            ON
-                phs.Proto_idProto = p.idProto AND p.user_idUser = 1
-            GROUP BY
-                a.idApliance
-        ')->queryAll();
-
-    $dataset = array();
-	foreach ($consumptionWatts as $subarray) {
-		$id = 0;
-		foreach ($subarray as $key => $value) {
-			if($key == "idApliance"){
-				$id = $value;
-			}
-			else{
-				$dataset["app-id-".$id] = $value;
-			}
-		}
-	}
+    $consumption = new Consumption("a","2017","10","01","2017","10","31");
+    $dataset=$consumption->getData();
 
 	// el constructor pide charts (array(clave=>valor)) de datos, $string parametros (aquí va el col-md-5 o esas weas) y finalmente un bool random o no random (true = random)
 	$charts = new Charts("chartaso",$dataset,"col-md-5",false);
+	
+
 	//se usa el metodo render para mostrar el chart
 ?>
 
@@ -107,3 +78,4 @@ $this->params['breadcrumbs'][] = $this->title;
 	?>
 	
 </div>
+
