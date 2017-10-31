@@ -28,9 +28,10 @@ $this->params['breadcrumbs'][] = $this->title;
 	
 
 <?php 
-	// El constructor de 'Consumption' pide 7 datos el primero siendo el cálculo que va a arrojar "consumo promedio" ("a") o consumo total ("s") para cada "apliance"
+	// El constructor de 'Consumption' pide 8 datos el primero siendo el cálculo que va a arrojar "consumo promedio" ("a") o consumo total ("s") para cada "apliance", los siguientes 3 componen la fecha inicial desde la cual se visualizará la información, los otros 3 parámetros la fecha 'tope' finalmente el tipo de dato que se obtendrá ya sea 'amps' (a), 'volts' (v) y 'wats' (w)
+	
 	// La función 'getData()' obtiene la información y la regresa para ser amacenada en una variable
-    $consumption = new Consumption("a","2017","10","01","2017","10","31");
+    $consumption = new Consumption("a","2017","10","01","2017","10","31",'a');
     $dataset=$consumption->getData();
 	
 	// clase de charts //
