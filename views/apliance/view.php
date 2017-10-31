@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'idApliance',
-            'elecType_idElecType',
+            'elecType',
             'Marca',
             'Modelo',
         ],

@@ -87,4 +87,8 @@ class Apliance extends \yii\db\ActiveRecord
     public function getUserId(){
         return ProtoHasApliance::findOne(["apliance_idApliance"=>$this->idApliance])->userId;
     }
+
+    public function getElecType(){
+        return Electype::findOne(["idElecType"=>$this->elecType_idElecType])->Nombre;
+    }
 }

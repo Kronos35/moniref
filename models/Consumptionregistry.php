@@ -66,4 +66,8 @@ class Consumptionregistry extends \yii\db\ActiveRecord
     public function getUserId(){
         return Apliance::findOne(["idApliance"=>$this->apliance_idApliance])->userId;
     }
+    public function getApliance(){
+        $model = Apliance::findOne(["idApliance"=>$this->apliance_idApliance]);
+        return $model->Marca . " " . $model->Modelo;
+    }
 }

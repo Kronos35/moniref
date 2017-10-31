@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Consumptionregistry */
 
-$this->title = $model->idConsumption;
+$this->title = "Consumo #" . $model->idConsumption;
 $this->params['breadcrumbs'][] = ['label' => 'Consumptionregistries', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'idConsumption',
-            'apliance_idApliance',
+            'apliance',
             'watts',
             'amps',
             'volts',
