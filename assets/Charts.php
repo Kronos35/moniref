@@ -8,12 +8,22 @@ class Charts{
 	private $optionclass;
 	private $data;
 	private $rand;
+	private $chartid;
+	private $charttype;
+	public $type = array("pie","doughnut","bar","line","radar","polarArea");
+	private $title;
 
-	function __construct($data= ["EJ"=>1,"EJ"=>2,"EJ"=>10,"EJ"=>20],$optionclass="col-md-6",$rand = true) {
+	function __construct($chartid,$data= ["EJ"=>1,"EJ"=>2,"EJ"=>10,"EJ"=>20],$optionclass="col-md-6",$rand = true) {
        $this->optionclass = $optionclass;
        $this->data = $data;
-       asort($this->data);
        $this->rand = $rand;
+       $this->chartid = $chartid;
+       $this->charttype = "doughnut";
+       $this->title = "Mi gráfica";
+    }
+
+    public function sortData(){
+    	asort($this->data);
     }
 
 	public function setOptionClass($optionclass){
@@ -67,6 +77,14 @@ class Charts{
 		return $string . "]";
 	}
 
+	public function setChartType($type){
+		$this->charttype = $type;
+	}
+
+	public function setChartTitle($title){
+		$this->title = $title;
+	}
+
 	public function render(){
 		echo Html::jsFile('@web/js/Chart.bundle.js');
 		echo "
@@ -75,19 +93,19 @@ class Charts{
 				<canvas id=\"chart-area\" width=\"100\" height=\"100\"></canvas>
 			</div>
 
-			<canvas id=\"myChart\" width=\"100\" height=\"100\">
+			<canvas id=\"" . $this->chartid . "\" width=\"100\" height=\"100\">
 				
 			</canvas>
 				
 			<script>
-				var ctx = document.getElementById(\"myChart\").getContext('2d');
+				var ctx = document.getElementById(\"". $this->chartid . "\").getContext('2d');
 
 				var myChart = new Chart(ctx, {
-				    type: 'doughnut',
+				    type: '" . $this->charttype . "',
 				    data: {
-				        labels: " . $this->getLabels(). ",
+				        labels: " . $this->getLabels() . ",
 				        datasets: [{
-				            label: '# of Votes',
+				            label: '".$this->title."',
 				            data:" . $this->getData() . ",
 				            backgroundColor: " . $this->getColours() . ",
 				            borderColor: ".$this->getborders().",
