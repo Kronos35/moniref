@@ -51,6 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	$charts4 = new Charts("charid4",["data2"=>11, "potato"=>21, "data3"=>7,"data4"=>30, "potato2"=>44],"col-md-3",true);
 	$charts4->setChartType($charts4->type[3]);
 	$charts4->render();
+
 ?>
 </div>
 
