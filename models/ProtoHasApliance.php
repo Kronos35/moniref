@@ -71,4 +71,9 @@ class ProtoHasApliance extends \yii\db\ActiveRecord
     public function getUserId(){
         return Proto::findOne(["idProto"=>$this->Proto_idProto])->userId;
     }
+
+    public function getApliance(){
+        $model = Apliance::findOne(["idApliance"=>$this->apliance_idApliance]);
+        return $model->Marca . " " . $model->Modelo;
+    }
 }

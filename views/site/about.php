@@ -9,15 +9,6 @@ use app\assets\Charts;
 $this->title = 'About';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-
-<<<<<<< HEAD
-=======
-
->>>>>>> 5a247a86363109e6c972426c9b57f6d723b88a85
-
-    <?php 
-        echo Html::jsFile('@web/js/Chart.bundle.js'); 
-    ?>
 <?php 
     $consumptionWatts = Yii::$app->db->createCommand('
             SELECT
@@ -40,7 +31,6 @@ $this->params['breadcrumbs'][] = $this->title;
             GROUP BY
                 a.idApliance
         ')->queryAll();
-<<<<<<< HEAD
 
     $dataset = array();
 	foreach ($consumptionWatts as $subarray) {
@@ -56,35 +46,8 @@ $this->params['breadcrumbs'][] = $this->title;
 	}
 
 	// el constructor pide charts (array(clave=>valor)) de datos, $string parametros (aquí va el col-md-5 o esas weas) y finalmente un bool random o no random (true = random)
-	$charts = new Charts("chartaso",$dataset,"col-md-4",false);
+	$charts = new Charts("chartaso",$dataset,"col-md-5",false);
 	//se usa el metodo render para mostrar el chart
-=======
-    //print_r($consumptionWatts);
-
-    $dataset = array();
-    
-	foreach ($consumptionWatts as $subarray) {
-		$id = 0;
-		$arrvalue = 0;
-		foreach ($subarray as $key => $value) {
-			if($key = "idApliance"){
-				$id = $value;
-			}
-			else{
-				$arrvalue = $value;
-			}
-		}
-		$dataset["app-id-".$id] = $arrvalue;
-	}
-	print_r($dataset);
-    
-	// clase de charts //
-	// requiere llamar esto: "use app\assets\Charts;" //
-
-	// el constructor de charts pide $string(id del chart), (array(clave=>valor)) de datos, $string parametros (aquí va el col-md-5 o esas weas) y finalmente un bool random o no random (true = random)
-    $charts = new Charts("charid",$dataset,"col-md-3",true);
->>>>>>> 5a247a86363109e6c972426c9b57f6d723b88a85
-	$charts->render();
 ?>
 
 <div class="site-about">
@@ -97,10 +60,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     	<code><?= __FILE__ ?></code>
     </div>
-<<<<<<< HEAD
-=======
-</div>
->>>>>>> 5a247a86363109e6c972426c9b57f6d723b88a85
 </div>
 <div class="row">
 	
@@ -148,8 +107,3 @@ $this->params['breadcrumbs'][] = $this->title;
 	?>
 	
 </div>
-<<<<<<< HEAD
-=======
-
-
->>>>>>> 5a247a86363109e6c972426c9b57f6d723b88a85

@@ -1,8 +1,8 @@
 <?php
 namespace app\assets;
 
+use Yii;
 use yii\helpers\Html;
-
 
 class Charts{
 	private $optionclass;

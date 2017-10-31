@@ -19,10 +19,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
 
             'idConsumption',
-            'apliance_idApliance',
+            'apliance',
             'watts',
             'amps',
             'volts',

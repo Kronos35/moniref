@@ -77,4 +77,9 @@ class Proto extends \yii\db\ActiveRecord
     public function getUserId(){
         return $this->user_idUser;
     }
+
+    public function getUser(){
+        $model = User::findOne(["idUser"=>$this->userId]);
+        return $model->name . " " . $model->lastName;
+    }
 }
