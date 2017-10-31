@@ -1,10 +1,8 @@
 <?php
 namespace app\assets;
-<<<<<<< HEAD
-=======
+
 
 use Yii;
->>>>>>> 748be37529c848543a6473c368d66407316e139d
 use yii\helpers\Html;
 
 class Charts{
