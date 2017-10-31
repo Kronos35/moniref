@@ -15,7 +15,27 @@ $this->params['breadcrumbs'][] = $this->title;
         echo Html::jsFile('@web/js/Chart.bundle.js'); 
     ?>
 <?php 
-    $consumptionWatts = Yii::$app->db->createCommand('SELECT * FROM user')->queryAll();
+    $consumptionWatts = Yii::$app->db->createCommand('
+            SELECT
+                a.idApliance,
+                AVG(cr.watts)
+            FROM
+                consumptionregistry cr
+            INNER JOIN
+                apliance a
+            ON
+                a.idApliance = cr.apliance_idApliance
+            INNER JOIN
+              proto_has_apliance phs
+            ON
+                phs.apliance_idApliance = a.idApliance
+            INNER JOIN
+                proto p
+            ON
+                phs.Proto_idProto = p.idProto AND p.user_idUser = 1
+            GROUP BY
+                a.idApliance
+        ')->queryAll();
 	// clase de charts //
 	// requiere llamar esto: "use app\assets\Charts;" //
 
