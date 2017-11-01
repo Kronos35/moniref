@@ -64,7 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	$charts4->setChartType($charts4->type[2]);
 	$charts4->setChartTitle("Amp");
 	$charts4->render();
-?>
+	?>
 </div>
 
 <div class="row">

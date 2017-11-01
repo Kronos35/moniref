@@ -55,7 +55,14 @@ class Consumption{
     	$sql='SELECT a.idApliance, '.$this->optn.'(cr.'.$this->conType.') FROM consumptionregistry cr INNER JOIN apliance a ON a.idApliance = cr.apliance_idApliance AND (cr.date BETWEEN "'.$this->startDate.'" AND "'.$this->endDate.'") INNER JOIN proto_has_apliance phs ON phs.apliance_idApliance = a.idApliance INNER JOIN proto p ON phs.Proto_idProto = p.idProto AND p.user_idUser = 1 GROUP BY a.idApliance';
     	$this->query = Yii::$app->db->createCommand($sql)->queryAll();
         $this->setData();
-        return $this->result;
+        if (count($this->result)>0){
+        	return $this->result;
+        }
+        else{
+        	$noRegistry=array("No stored registries"=>'0');
+        	return $noRegistry;
+        }
+        
     }
 }	
 ?>
