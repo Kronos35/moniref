@@ -19,7 +19,7 @@ class Consumption{
 		switch ($initOptn) {
 			case 'a':
 				$this->optn="AVG";
-				break;
+				break;	
 			case 's':
 				$this->optn="SUM";
 				break;
