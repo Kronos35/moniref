@@ -16,4 +16,5 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php echo Html::a("Ver dispositivos", array("/proto/index"),array("class"=>"btn btn-default")); ?>
     <?php echo Html::a("Ver consumo", array("/consumptionregistry/index"),array("class"=>"btn btn-default")); ?>
 
+
 </div>

@@ -37,7 +37,7 @@ class ProtoController extends Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Proto::find(),
+            'query' => Proto::find()->where(["user_idUser"=>Yii::$app->user->id]),
         ]);
 
         return $this->render('index', [

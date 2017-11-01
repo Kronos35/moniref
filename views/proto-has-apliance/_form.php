@@ -2,6 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use app\models\Proto;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\ProtoHasApliance */
@@ -12,7 +14,12 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'Proto_idProto')->textInput() ?>
+    <?php 
+    	// mover esta linea al controlador //
+    	$items = ArrayHelper::map(Proto::find()->where(["user_idUser"=>Yii::$app->user->id])->all(), 'idProto', 'idProto'); 
+    ?>
+
+    <?= $form->field($model, 'Proto_idProto')->dropDownList($items); ?>
 
     <?= $form->field($model, 'apliance_idApliance')->textInput() ?>
 

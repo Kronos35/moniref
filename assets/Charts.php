@@ -1,10 +1,7 @@
 <?php
 namespace app\assets;
-<<<<<<< HEAD
-=======
 
 use Yii;
->>>>>>> 748be37529c848543a6473c368d66407316e139d
 use yii\helpers\Html;
 
 class Charts{
@@ -16,7 +13,7 @@ class Charts{
 	public $type = array("pie","doughnut","bar","line","radar","polarArea");
 	private $title;
 
-	function __construct($chartid,$data= ["EJ"=>1,"EJ"=>2,"EJ"=>10,"EJ"=>20],$optionclass="col-md-6",$rand = true) {
+	function __construct($chartid="basechart",$data= ["EJ1"=>1,"EJ2"=>2,"EJ3"=>10,"EJ4"=>20],$optionclass="col-md-12",$rand = true) {
        $this->optionclass = $optionclass;
        $this->data = $data;
        $this->rand = $rand;
