@@ -10,17 +10,6 @@ use app\assets\Consumption;
 $this->title = 'About';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<?php 
-<<<<<<< HEAD
-    $consumption = new Consumption("a","2017","10","01","2017","10","31");
-    $dataset=$consumption->getData();
-
-	// el constructor pide charts (array(clave=>valor)) de datos, $string parametros (aquí va el col-md-5 o esas weas) y finalmente un bool random o no random (true = random)
-	$charts = new Charts("chartaso",$dataset,"col-md-5",false);
-	$charts->render();
-=======
->>>>>>> c0e70b09903b353f214898f8c2f8b86abf73f89c
-?>
 
 <div class="site-about">
     <h1><?= Html::encode($this->title) ?></h1>
@@ -70,15 +59,9 @@ $this->params['breadcrumbs'][] = $this->title;
 	$charts3->setChartTitle("Mi graficota");
 	$charts3->render();
 
-<<<<<<< HEAD
-	$charts4 = new Charts();
-=======
 	$charts4 = new Charts("charid4",$datasetAmps,"col-md-3",true);
 	$charts4->setChartType($charts4->type[3]);
->>>>>>> c0e70b09903b353f214898f8c2f8b86abf73f89c
 	$charts4->render();
-
-?>
 </div>
 
 <div class="row">
@@ -92,8 +75,4 @@ $this->params['breadcrumbs'][] = $this->title;
 		$charts6->render();
 	?>
 	
-<<<<<<< HEAD
 </div>
-=======
-</div>
->>>>>>> c0e70b09903b353f214898f8c2f8b86abf73f89c
