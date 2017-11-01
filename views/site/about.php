@@ -62,6 +62,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	$charts4 = new Charts("charid4",$datasetAmps,"col-md-3",true);
 	$charts4->setChartType($charts4->type[3]);
 	$charts4->render();
+	?>
 </div>
 
 <div class="row">
