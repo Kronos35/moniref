@@ -11,7 +11,7 @@ use yii\helpers\Html;
     <div class="jumbotron">
         <h1>Moniref</h1>
 
-        <p class="lead">Consulta el consumo de tus aparatos electrónicos.</p>
+        <p class="lead">Controla tus aparatos electrónicos.</p>
 
         <p><?php echo Html::a("Registrate aquí",["/user/create"],["class"=>"btn btn-success"]); ?></p>
     </div>
