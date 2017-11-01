@@ -1,9 +1,5 @@
 <?php
 namespace app\assets;
-<<<<<<< HEAD
-=======
-
->>>>>>> c0e70b09903b353f214898f8c2f8b86abf73f89c
 
 use Yii;
 use yii\helpers\Html;
