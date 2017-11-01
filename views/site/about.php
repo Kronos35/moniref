@@ -50,17 +50,19 @@ $this->params['breadcrumbs'][] = $this->title;
 
 	// Este es un ejemplo de otra chart en la misma pantalla
 	$charts2 = new Charts("charid2",$datasetWatts,"col-md-3",false);
-	$charts2->setChartType($charts2->type[1]);
+	$charts2->setChartType($charts2->type[2]);
+	$charts2->setChartTitle("Watts");
 	$charts2->render();
 
 	$charts3 = new Charts("charid3",$datasetVolts,"col-md-3",true);
 	$charts3->setChartType($charts3->type[2]);
 	// este metodo permite cambiar el nombre a la grafica
-	$charts3->setChartTitle("Mi graficota");
+	$charts3->setChartTitle("Volts");
 	$charts3->render();
 
 	$charts4 = new Charts("charid4",$datasetAmps,"col-md-3",true);
-	$charts4->setChartType($charts4->type[3]);
+	$charts4->setChartType($charts4->type[2]);
+	$charts4->setChartTitle("Amp");
 	$charts4->render();
 	?>
 </div>
