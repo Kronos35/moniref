@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Apliance;
+use app\models\ProtoHasApliance;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -61,16 +62,28 @@ class AplianceController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate(){
+    public function actionCreate($id){
         $model = new Apliance();
+        if($model->load(Yii::$app->request->post())){
+            if ($model->save()) {
+                $submodel = new ProtoHasApliance();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->idApliance]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+                $submodel->Proto_idProto = $id;
+                $submodel->apliance_idApliance = $model->idApliance;
+                $submodel->connectionDate = date("Y-m-d");
+                echo $submodel->Proto_idProto . "<br>";
+                if($submodel->save()){
+                    echo "El id guardado: ";
+                    echo $submodel->Proto_idProto . "<br>";
+                    die();
+                    return $this->redirect(['view', 'id' => $model->idApliance]);
+                }
+            }
         }
+        return $this->render('create', [
+            'model' => $model,
+            //"id" => $id,
+        ]);
     }
 
     /**

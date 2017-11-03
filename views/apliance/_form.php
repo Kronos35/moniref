@@ -17,6 +17,17 @@ use yii\widgets\ActiveForm;
     	// mover esta linea al controlador //
     	$items = ArrayHelper::map(Electype::find()->all(), 'idElecType', 'Nombre'); 
     ?>
+
+    <!--
+    <div class="form-group field-proto">
+        <label class="control-label" for="proto">ID Prototipo</label>
+
+        <input class="form-control" type="text" name="proto" value="<?php /*echo $id;*/ ?>" disabled>
+        <div class="help-block"></div>
+    </div>
+    -->
+    
+
     <?= $form->field($model, 'elecType_idElecType')->dropDownList($items); ?>
 
     <?= $form->field($model, 'Marca')->textInput(['maxlength' => true]) ?>

@@ -41,7 +41,7 @@ $this->params['breadcrumbs'][] = $this->title;
     ]) ?>
 
     <?php
-        echo "<h2>actual apliance connected:</h2>";
+        echo "<h2>Actual apliance connected:</h2>";
         $protohasapliance = ProtoHasApliance::findOne( ["Proto_idProto" => $model->idProto] );
         if($protohasapliance && $protohasapliance->disconnectionDate == null){
             $apliance = Apliance::findOne(["idApliance"=> $protohasapliance->apliance_idApliance]);
