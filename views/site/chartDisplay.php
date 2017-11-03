@@ -1,4 +1,6 @@
 <?php  
-	$startYear = isset($_POST['startYear']) ? $_POST['startYear'] : 'nothing';
+	if (!$_POST['startYear']) die("0"); 
+	$startYear = (int)($_POST['startYear']) die("0");
+
 	echo "chart";
 ?>
