@@ -6,20 +6,71 @@ use yii\helpers\Html;
 use app\models\Consumptionregistry;
 use app\assets\Charts;
 use app\assets\Consumption;
+use app\assets\ChartDateCalc;
 
 $this->title = 'About';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-
 <div class="site-about">
+	<script type="text/javascript" src="/moniref/web/js/ChartsAjax.js"></script>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.js"></script>
     <h1><?= Html::encode($this->title) ?></h1>
+    <div class="form-group field-contactform-subject required">
+</div>
 
     <div class="row">
-    	<p>
-    	    This is the About page. You may modify the following file to customize its content:
-    	</p>
+    	
+        <form id="chartAttributeSelection">
+	        <div>
+		        <label class="control-label" for="contactform-subject">Seleccione la fecha de inicio del periodo de su consulta</label>
+		    	<?php  
+		    		$startDate= new ChartDateCalc("start");
+		    		$startDate->render();
+		    	?>
+		    	<label class="control-label" for="contactform-subject">Seleccione la fecha de término del periodo de su consulta</label>
+		    	<?php
+		    		$endDate= new ChartDateCalc("end");
+		    		$endDate->render();
+		    	?>
+	    	</div>
+			<div>
+				<label class="control-label" for="contactform-subject">Seleccione las unidades de su consulta:</label>
+		        <select id="unitType" name="unitType" class='form-control' style='width: 30%;'>>
+		        	<option value="w">Watts</option>
+		        	<option value="a">Amperes</option>
+		        	<option value="v">Volts</option>
+		        </select>
+		        <label class="control-label" for="contactform-subject">Seleccione el tipo de consulta:</label>
+		        <select id="calcType" name="calcType" class='form-control' style='width: 30%;'>>
+		        	<option value="a">Promedio</option>
+		        	<option value="s">Total</option>
+		        </select>
+	        </div>
 
-    	<code><?= __FILE__ ?></code>
+	        <p>
+				<a class="btn btn-primary" >Consultar</a>
+			</p>
+	    </form>
+      	<div id="Charts">
+      		Chart
+      	</div>
+      	<script type="text/javascript">
+        	$('#chartAttributeSelection').click(function(event) {
+		        $.post('chartDisplay.php', { 
+		        	startYear: $('#startYear').val(), 
+		        	startMonth:$('#startMonth').val(),
+		        	startDay:$('#startDay').val(),
+		        	endYear:$('#endYear').val(),
+		        	endMonth:$('#endMonth').val(),
+		        	endDay:$('#endDay').val(),
+		        	unitType:$('#unitType').val(),
+		        	calcType:$('#calcType').val()
+		        }, function(data) {
+		                $('#Charts').html(data);
+		            }
+		        );            
+		    });
+		</script>
     </div>
 </div>
 <div class="row">
