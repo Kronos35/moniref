@@ -70,4 +70,5 @@ class Consumptionregistry extends \yii\db\ActiveRecord
         $model = Apliance::findOne(["idApliance"=>$this->apliance_idApliance]);
         return $model->Marca . " " . $model->Modelo;
     }
+    
 }
