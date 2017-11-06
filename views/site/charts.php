@@ -12,7 +12,7 @@ use app\assets\ChartDateCalc;
 $this->title = 'Charts';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-about">
+<div class="site-charts">
 	<script type="text/javascript" src="/moniref/web/js/ChartsAjax.js"></script>
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.js"></script>
     <h1><?= Html::encode($this->title) ?></h1>
@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="row">
     	<?= Html::beginForm(
-    		Url::toRoute("site/chartDisplay"),//action
+    		Url::toRoute("site/chartdisplay"),//action
     		"get",//method
     		['class'=>'form-inline']//options
     	);
@@ -29,20 +29,63 @@ $this->params['breadcrumbs'][] = $this->title;
     	<h3><?= $message?></h3>    	
 	        <div class="form-group">
 	        	<div id="start">
-	        	<?=
-	        		Html::label("Seleccione Seleccione la fecha de inicio del periodo de su consulta",'startDate');
+	        	<?php
+	        		echo Html::label("Seleccione Seleccione la fecha de inicio del periodo de su consulta",'startDate');
 	        		echo "<br/>";
-		    		//Html::dropDownList("startYear",null,['2017'=>'2017']);
-		    		$startDate= new ChartDateCalc("start");
-		    		$startDate->render();
+	        		echo Html::dropDownList("startYear",null,['2017'=>'2017'],['class'=>'form-control','style'=>'width:30%;']);
+	        		$months= array();
+	        		for ($i=0; $i < 12; $i++) { 
+	        			$months[$i+1]=$i+1;
+	        		}
+	        		echo Html::dropDownList("startMonth",null,$months,['class'=>'form-control','style'=>'width:30%;']);
+	        		$days=array();
+	        		echo Html::dropDownList("startDay",null,$days,['class'=>'form-control','style'=>'width:30%;']);
+		    		//$startDate= new ChartDateCalc("start");
+		    		//$startDate->render();
 		    	?>
 		    	</div>
+		    	<script type="text/javascript">
+		    		function calculateDays(var type){
+						var y = $('#'+type+'Year').val();
+						var m = $('#'+type+'Month').val();
+						var days = new Date(y,m,1,-1).getDate();
+						return days;
+					}
+					function printDays(var type){
+						var days = calculateDays();
+				    	for (var i = 0; i < days; i++) {
+				    		Day='<option value='+(i+1)+'>'+(i+1)+'</option>';
+				    	}
+						$('#'+type+'Day').html(".$this->selDateID."Day);
+					}
+					$('#startMonth').ready(function() {
+					    printDays('start');
+					});
+				    $('#startMonth').change(function(event) {
+				    	printDays('start');
+				    });
+				    $('#endYear').ready(function(event) {
+				    	printDays('end');
+				    });
+				    $('#endYear').change(function(event) {
+				    	printDays('end');
+				    });
+		    	</script>
 		    	<div id="end">
 		    	<?=
 		    		Html::label("Seleccione la fecha de término del periodo de su consulta", 'endDate');
 		    		echo "<br>";
-		    		$endDate= new ChartDateCalc("end");
-		    		$endDate->render();
+
+	        		echo Html::dropDownList("endYear",null,['2017'=>'2017'],['class'=>'form-control','style'=>'width:30%;']);
+	        		$months= array();
+	        		for ($i=0; $i < 12; $i++) { 
+	        			$months[$i+1]=$i+1;
+	        		}
+	        		echo Html::dropDownList("endMonth",null,$months,['class'=>'form-control','style'=>'width:30%;']);
+	        		$days=array();
+	        		echo Html::dropDownList("endDay",null,$days,['class'=>'form-control','style'=>'width:30%;']);
+		    		//$endDate= new ChartDateCalc("end");
+		    		//$endDate->render();
 		    	?>
 		    	</div>
 				<label class="control-label" for="contactform-subject">Seleccione las unidades de su consulta:</label>
