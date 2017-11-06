@@ -65,6 +65,7 @@ class AplianceController extends Controller
     public function actionCreate($id){
         $model = new Apliance();
         if($model->load(Yii::$app->request->post())){
+            $model->user_idUser = Yii::$app->user->id;
             if ($model->save()) {
                 $submodel = new ProtoHasApliance();
 
@@ -73,9 +74,6 @@ class AplianceController extends Controller
                 $submodel->connectionDate = date("Y-m-d");
                 echo $submodel->Proto_idProto . "<br>";
                 if($submodel->save()){
-                    echo "El id guardado: ";
-                    echo $submodel->Proto_idProto . "<br>";
-                    die();
                     return $this->redirect(['view', 'id' => $model->idApliance]);
                 }
             }
