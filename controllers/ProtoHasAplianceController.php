@@ -62,16 +62,39 @@ class ProtoHasAplianceController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($id)
-    {
+    public function actionCreate($id){
         $model = new ProtoHasApliance();
-        $model->Proto_idProto = $id;
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'Proto_idProto' => $model->Proto_idProto, 'apliance_idApliance' => $model->apliance_idApliance]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+        
+        if ($model->load(Yii::$app->request->post())){
+            if($this->update_create($id,$model->apliance_idApliance)){
+                return $this->redirect(['/proto/view', 'id' => $id]);
+            }
+        }
+        return $this->render('create', ['model' => $model,]);
+    }
+
+    public function update_create( $proto, $apliance){
+        //desconectar otro apliance //
+        $models = ProtoHasApliance::find(["Proto_idProto"=>$proto])->where(["disconnectionDate"=>null])->all();
+        foreach ($models as $model) {
+            $model->disconnectionDate = date("Y-m-d");
+            $model->save();
+        }
+
+        // buscando si existe //
+        $existe = ProtoHasApliance::findOne(["Proto_idProto"=>$proto, "apliance_idApliance"=>$apliance]);
+
+        if($existe){
+            $existe->disconnectionDate = null;
+            $existe->connectionDate = date("Y-m-d");
+            return $existe->save();
+        }
+        else{ //si no existe, lo crea //
+            $nuevo = new ProtoHasApliance();
+            $nuevo->connectionDate = date("Y-m-d");
+            $nuevo->apliance_idApliance = $apliance;
+            $nuevo->Proto_idProto = $proto;
+            return $nuevo->save();
         }
     }
 

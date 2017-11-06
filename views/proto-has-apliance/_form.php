@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use app\models\Proto;
+use app\models\Apliance;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\ProtoHasApliance */
@@ -15,17 +16,14 @@ use app\models\Proto;
     <?php $form = ActiveForm::begin(); ?>
 
     <?php 
-    	// mover esta linea al controlador //
-    	$items = ArrayHelper::map(Proto::find()->where(["user_idUser"=>Yii::$app->user->id])->all(), 'idProto', 'idProto'); 
+        $items = array();
+        foreach (Apliance::find()->where(["user_idUser"=>Yii::$app->user->id])->all() as $mod) {
+            $items[$mod->idApliance] = $mod->Marca . " " . $mod->Modelo;
+        }
+        
     ?>
 
-    <?= $form->field($model, 'Proto_idProto')->dropDownList($items); ?>
-
-    <?= $form->field($model, 'apliance_idApliance')->textInput() ?>
-
-    <?= $form->field($model, 'connectionDate')->textInput() ?>
-
-    <?= $form->field($model, 'disconnectionDate')->textInput() ?>
+    <?= $form->field($model, 'apliance_idApliance')->dropDownList($items); ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
