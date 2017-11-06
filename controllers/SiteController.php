@@ -122,4 +122,26 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
+    /***Custom views***/
+    public function actionCharts($message=null){
+        return $this->render('charts',["message"=>$message]);
+    }
+    public function actionFormulario($mensaje = null)
+    {
+        return $this->render("formulario", ["mensaje" => $mensaje]);
+    }
+    
+    public function actionRequest()
+    {
+        $mensaje = null;
+        if (isset($_REQUEST["nombre"]))
+        {
+            $mensaje = "Bien, has enviando tu nombre correctamente: " . $_REQUEST["nombre"];
+        }
+        $this->redirect(["site/formulario", "mensaje" => $mensaje]);
+    }
+
+    public function actionValidarformulario(){
+        return $this->render("validarformulario");
+    }
 }

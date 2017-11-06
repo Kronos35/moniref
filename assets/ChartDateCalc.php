@@ -38,6 +38,13 @@ class ChartDateCalc{
 					var days = new Date(y,m,1,-1).getDate();
 					return days;
 				}
+				$('#".$this->selDateID."Month').ready(function() {
+				    var days = calculateDays();
+			    	for (var i = 0; i < days; i++) {
+				    	".$this->selDateID."Day='<option value='+days+'>'+days+'</option>';
+				    }
+					$('#".$this->selDateID."Day').html(".$this->selDateID."Day);
+				});
 			    $('#".$this->selDateID."Month').change(function(event) {
 			    	var days = calculateDays();
 			    	for (var i = 0; i < days; i++) {

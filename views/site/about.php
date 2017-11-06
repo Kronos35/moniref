@@ -11,7 +11,7 @@ use app\assets\ChartDateCalc;
 $this->title = 'About';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="site-about">
+<div class="site-charts">
 	<script type="text/javascript" src="/moniref/web/js/ChartsAjax.js"></script>
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.js"></script>
     <h1><?= Html::encode($this->title) ?></h1>
@@ -48,15 +48,15 @@ $this->params['breadcrumbs'][] = $this->title;
 	        </div>
 
 	        <p>
-				<a class="btn btn-primary" >Consultar</a>
+				<a class="btn btn-primary" id="submitDate">Consultar</a>
 			</p>
 	    </form>
       	<div id="Charts">
-      		Chart
       	</div>
       	<script type="text/javascript">
-        	$('#chartAttributeSelection').click(function(event) {
-		        $.post('chartDisplay.php', { 
+        	$('#submitDate').click(function(event) {
+		        $('#Charts').html("starting");
+		        $.post('ChartDisplay.php', { 
 		        	startYear: $('#startYear').val(), 
 		        	startMonth:$('#startMonth').val(),
 		        	startDay:$('#startDay').val(),
@@ -68,7 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		        }, function(data) {
 		                $('#Charts').html(data);
 		            }
-		        );            
+		        );
 		    });
 		</script>
     </div>
