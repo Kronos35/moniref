@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Apliance;
+use app\models\Proto;
 use app\models\ProtoHasApliance;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
@@ -37,7 +38,7 @@ class AplianceController extends Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => Apliance::find(),
+            'query' => Apliance::find(["user_idUser"=>Yii::$app->user->id]),
         ]);
 
         return $this->render('index', [
@@ -65,25 +66,41 @@ class AplianceController extends Controller
     public function actionCreate($id){
         $model = new Apliance();
         if($model->load(Yii::$app->request->post())){
+            $model->user_idUser = Yii::$app->user->id;
             if ($model->save()) {
-                $submodel = new ProtoHasApliance();
-
-                $submodel->Proto_idProto = $id;
-                $submodel->apliance_idApliance = $model->idApliance;
-                $submodel->connectionDate = date("Y-m-d");
-                echo $submodel->Proto_idProto . "<br>";
-                if($submodel->save()){
-                    echo "El id guardado: ";
-                    echo $submodel->Proto_idProto . "<br>";
-                    die();
-                    return $this->redirect(['view', 'id' => $model->idApliance]);
-                }
+                // YOLO //
+                $this->update_create($id,$model->idApliance);
+                return $this->redirect(['/proto/view', 'id' => $id]);
             }
         }
         return $this->render('create', [
             'model' => $model,
-            //"id" => $id,
         ]);
+    }
+
+    public function update_create( $proto, $apliance){
+        //desconectar otro apliance //
+        $models = ProtoHasApliance::find(["Proto_idProto"=>$proto])->where(["disconnectionDate"=>null])->all();
+        foreach ($models as $model) {
+            $model->disconnectionDate = date("Y-m-d");
+            $model->save();
+        }
+
+        // buscando si existe //
+        $existe = ProtoHasApliance::findOne(["Proto_idProto"=>$proto, "apliance_idApliance"=>$apliance]);
+
+        if($existe){
+            $existe->disconnectionDate = null;
+            $existe->connectionDate = date("Y-m-d");
+            $existe->save();
+        }
+        else{ //si no existe, lo crea //
+            $nuevo = new ProtoHasApliance();
+            $nuevo->connectionDate = date("Y-m-d");
+            $nuevo->apliance_idApliance = $apliance;
+            $nuevo->Proto_idProto = $proto;
+            $nuevo->save();
+        }
     }
 
     /**
