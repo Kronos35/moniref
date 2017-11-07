@@ -13,7 +13,10 @@ class Charts{
 	public $type = array("pie","doughnut","bar","line","radar","polarArea");
 	private $title;
 
-	function __construct($chartid="basechart",$data= ["EJ1"=>1,"EJ2"=>2,"EJ3"=>10,"EJ4"=>20],$optionclass="col-md-12",$rand = true) {
+	/*
+		Poderoso constructor
+	*/
+	function __construct($chartid="basechart",$data= ["EJ1"=>1,"EJ2"=>2,"EJ4"=>20,"EJ3"=>10],$optionclass="col-md-12",$rand = true) {
        $this->optionclass = $optionclass;
        $this->data = $data;
        $this->rand = $rand;
@@ -22,19 +25,28 @@ class Charts{
        $this->title = "Mi gráfica";
     }
 
+    /*
+		Funcion que ordena los datos
+	*/
     public function sortData(){
     	asort($this->data);
     }
 
+    /*
+		Funcion que asigna el tipo de clase para mostrar el chart
+	*/
 	public function setOptionClass($optionclass){
 		$this->optionclass = $optionclass;
 	}
 
+	/*
+		Funcion que asigna los datos al chart
+	*/
 	public function setData($data){
 		$this->data = $data;
 	}
 
-	public function getData(){
+	private function getData(){
 		$string = "[";
 		foreach ($this->data as $key => $value) {
 			$string .= "'" . $value . "', ";
@@ -42,7 +54,7 @@ class Charts{
 		return $string . "]";
 	}
 
-	public function getLabels(){
+	private function getLabels(){
 		$string = "[";
 		foreach ($this->data as $key => $value) {
 			$string .= "'" . $key . "', ";
@@ -50,7 +62,7 @@ class Charts{
 		return $string . "]";
 	}
 
-	public function getColours(){
+	private function getColours(){
 		if($this->rand==true){
 			$string = "[";
 			foreach ($this->data as $key => $value) {
@@ -68,8 +80,21 @@ class Charts{
 			return $string . "]";
 		}
 	}
+	/*
+		Funcion hace los colores aleatorios YOLO
+	*/
+	public function randomColors(){
+		$this->rand = true;
+	}
+	/*
+		Funcion cambia los colores a rojo y se va incrementando la intencidad
+	*/
+	public function normalColors(){
+		$this->sortData();
+		$this->rand = false;
+	}	
 
-	public function getborders(){
+	private function getborders(){
 		$string = "[";
 		foreach ($this->data as $key => $value) {
 			$string .= "'rgba(255,255,255,1)',";
@@ -77,21 +102,30 @@ class Charts{
 		return $string . "]";
 	}
 
+	/*
+		Funcion que asigna el tipo de chart.
+	*/
 	public function setChartType($type){
 		$this->charttype = $type;
 	}
 
+	/*
+		Funcion que asigna el Título al chart (no funciona en dona o pie)
+	*/
 	public function setChartTitle($title){
 		$this->title = $title;
 	}
 
+	/*
+		Funcion que te dibuja el chart.
+	*/
 	public function render(){
 		echo Html::jsFile('@web/js/Chart.bundle.js');
 		echo "
 	    <div class=\"$this->optionclass\">
-	    	<div id=\"canvas-holder\">
+	    	<!--<div id=\"canvas-holder\">
 				<canvas id=\"chart-area\" width=\"100\" height=\"100\"></canvas>
-			</div>
+			</div>-->
 
 			<canvas id=\"" . $this->chartid . "\" width=\"100\" height=\"100\">
 				

@@ -2,6 +2,7 @@
 namespace app\assets;
 use Yii;
 use yii\helpers\Html;
+use app\models\Apliance;
 
 class Consumption{
 	private $result= array();
@@ -47,7 +48,8 @@ class Consumption{
 					$id = $value;
 				}
 				else{
-					$this->result["app-id".$id] = $value;
+					$model = Apliance::findOne(["idApliance"=>$id]);
+					$this->result[$model->Marca . " " . $model->Modelo] = $value;
 				}
 			}
 		}
