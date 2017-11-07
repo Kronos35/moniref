@@ -105,8 +105,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	        </div>
 
 	        <p>
-				<?= Html::submitInput("Consultar",["class"=>"btn btn-primary"]) 
-				//<a class="btn btn-primary" id="submitDate">Consultar</a>
+				<?= Html::submitInput("Consultar",["class"=>"btn btn-primary"]);
 				?>				
 				
 			</p>

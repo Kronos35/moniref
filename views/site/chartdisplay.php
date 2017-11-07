@@ -9,9 +9,9 @@ use app\assets\ChartDateCalc;
 	
 	
 	// La función 'getData()' obtiene la información y la regresa para ser amacenada en una variable
-    $consumptionWatts = new Consumption("a","2017","10","01","2017","10","31",'w');
-    $consumptionVolts = new Consumption("a","2017","10","01","2017","10","31",'v');
-    $consumptionAmps = new Consumption("a","2017","10","01","2017","10","31",'a');
+    $consumptionWatts = new Consumption("a","2017","10","01","2017","10","31",'w','1');
+    $consumptionVolts = new Consumption("a","2017","10","01","2017","10","31",'v', '1');
+    $consumptionAmps = new Consumption("a","2017","10","01","2017","10","31",'a', '1');
     $datasetWatts=$consumptionWatts->getData(Yii::$app->user->id);
     $datasetVolts=$consumptionVolts->getData(Yii::$app->user->id);
     $datasetAmps=$consumptionAmps->getData(Yii::$app->user->id);

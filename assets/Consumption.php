@@ -10,12 +10,14 @@ class Consumption{
 	private $conType;
 	private $startDate;
 	private $endDate;
+	private $user_idUser;
 
 	//Valid option inputs 'a' and 's' only it choses wether the graph will output an avg or a sum of registries
 	//StartYear and endYear are set in the following format 'YYYY-MM-DD hh:mm:ss'
-	function __construct($initOptn, $startDateYYYY, $startDateMM, $startDateDD, $endDateYYYY, $endDateMM, $endDateDD, $cType) {
+	function __construct($initOptn, $startDateYYYY, $startDateMM, $startDateDD, $endDateYYYY, $endDateMM, $endDateDD, $cType,$user_idUser) {
 		$this->startDate=$startDateYYYY."-".$startDateMM."-".$startDateDD." 00:00:00";
 		$this->endDate=$endDateYYYY."-".$endDateMM."-".$endDateDD." 00:00:00";
+		$this->user_idUser=$user_idUser;
 		switch ($initOptn) {
 			case 'a':
 				$this->optn="AVG";
@@ -50,9 +52,9 @@ class Consumption{
 			}
 		}
 	}
-    public function getData($user_idUser){
+    public function getData(){
     	//SELECT a.idApliance, AVG(cr.watts) FROM consumptionregistry cr INNER JOIN apliance a ON a.idApliance = cr.apliance_idApliance INNER JOIN proto_has_apliance phs ON phs.apliance_idApliance = a.idApliance INNER JOIN proto p ON phs.Proto_idProto = p.idProto AND p.user_idUser = 1 GROUP BY a.idApliance
-    	$sql='SELECT a.idApliance, '.$this->optn.'(cr.'.$this->conType.') FROM consumptionregistry cr INNER JOIN apliance a ON a.idApliance = cr.apliance_idApliance AND (cr.date BETWEEN "'.$this->startDate.'" AND "'.$this->endDate.'") INNER JOIN proto_has_apliance phs ON phs.apliance_idApliance = a.idApliance INNER JOIN proto p ON phs.Proto_idProto = p.idProto AND p.user_idUser = '.$user_idUser.' GROUP BY a.idApliance';
+    	$sql='SELECT a.idApliance, '.$this->optn.'(cr.'.$this->conType.') FROM consumptionregistry cr INNER JOIN apliance a ON a.idApliance = cr.apliance_idApliance AND (cr.date BETWEEN "'.$this->startDate.'" AND "'.$this->endDate.'") INNER JOIN proto_has_apliance phs ON phs.apliance_idApliance = a.idApliance INNER JOIN proto p ON phs.Proto_idProto = p.idProto AND p.user_idUser = '.$this->user_idUser.' GROUP BY a.idApliance';
     	$this->query = Yii::$app->db->createCommand($sql)->queryAll();
         $this->setData();
         if (count($this->result)>0){
