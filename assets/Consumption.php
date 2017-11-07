@@ -39,7 +39,7 @@ class Consumption{
 		}
     }
     //rearranges the data to be compatible with the 'charts' class
-    public function setData(){
+    private function setData(){
 		foreach ($this->query as $subarray) {
 			$id = 0;
 			foreach ($subarray as $key => $value) {
