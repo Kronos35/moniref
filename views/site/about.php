@@ -83,9 +83,12 @@ $this->params['breadcrumbs'][] = $this->title;
     $consumptionWatts = new Consumption("a","2017","10","01","2017","10","31",'w');
     $consumptionVolts = new Consumption("a","2017","10","01","2017","10","31",'v');
     $consumptionAmps = new Consumption("a","2017","10","01","2017","10","31",'a');
-    $datasetWatts=$consumptionWatts->getData();
-    $datasetVolts=$consumptionVolts->getData();
-    $datasetAmps=$consumptionAmps->getData();
+    $datasetWatts=$consumptionWatts->getData(Yii::$app->user->id);
+    $datasetVolts=$consumptionVolts->getData(Yii::$app->user->id);
+    $datasetAmps=$consumptionAmps->getData(Yii::$app->user->id);
+
+    print_r($datasetVolts);
+    die();
 	
 	// clase de charts //
 	// requiere llamar esto: "use app\assets\Charts;" //
