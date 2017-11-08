@@ -25,11 +25,11 @@ $this->params['breadcrumbs'][] = $this->title;
 			return days;
 		}
 		function printDays(var type){
-			var days = calculateDays('start');
+			/*var days = calculateDays('start');
 	    	for (var i = 0; i < days; i++) {
 	    		Day='<option value='+(i+1)+'>'+(i+1)+'</option>';
 	    	}
-			$('#'+type+'Day').html(".$this->selDateID."Day);
+			$('#'+type+'Day').html(".$this->selDateID."Day);*/
 		}
 		$('#startMonth').ready(function() {
 		    printDays('start');
@@ -49,7 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
     	<div class="col-md-6">
 	    	<?= Html::beginForm(
-	    		Url::toRoute("site/chartdisplay"),//action
+	    		Url::toRoute("site/charts"),//action
 	    		"get",//method
 	    		['class'=>'form-inline']//options
 	    	);
