@@ -159,8 +159,8 @@ $this->params['breadcrumbs'][] = $this->title;
 				//$chart->setChartType($chart->type[2]);
 				$chart->setChartTitle("Watts");
 				if(isset($_GET['calcType']) && $_GET['calcType'] == "s"){
-					$chartmax->setChartType($chartmax->type[2]);
-					$chartmax->normalColors();
+					$chart->setChartType($chart->type[2]);
+					$chart->normalColors();
 				}
 				$chart->render();
 			?>
