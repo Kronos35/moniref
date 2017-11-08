@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
     	<div class="col-md-6">
 	    	<?= Html::beginForm(
-	    		Url::toRoute("site/chartdisplay"),//action
+	    		Url::toRoute("site/charts"),//action
 	    		"get",//method
 	    		['class'=>'form-inline']//options
 	    	);
@@ -39,10 +39,11 @@ $this->params['breadcrumbs'][] = $this->title;
 		        			$months[$i+1]=$i+1;
 		        		}
 		        		echo Html::dropDownList("startMonth",null,$months,['class'=>'form-control','style'=>'width:30%;']);
-		        		$days=array();
-		        		echo Html::dropDownList("startDay",null,$days,['class'=>'form-control','style'=>'width:30%;']);
-			    		//$startDate= new ChartDateCalc("start");
-			    		//$startDate->render();
+		        		$startDays=array();
+		        		for ($i=0; $i < 31; $i++) { 
+		        			$startDays[$i+1]=$i+1;
+		        		}
+		        		echo Html::dropDownList("startDay",null,$startDays,['class'=>'form-control','style'=>'width:30%;']);
 			    	?>
 			    	</div>
 			    	<script type="text/javascript">
@@ -83,10 +84,11 @@ $this->params['breadcrumbs'][] = $this->title;
 		        			$months[$i+1]=$i+1;
 		        		}
 		        		echo Html::dropDownList("endMonth",null,$months,['class'=>'form-control','style'=>'width:30%;']);
-		        		$days=array();
-		        		echo Html::dropDownList("endDay",null,$days,['class'=>'form-control','style'=>'width:30%;']);
-			    		//$endDate= new ChartDateCalc("end");
-			    		//$endDate->render();
+		        		$endDays=array();
+		        		for ($i=0; $i < 31; $i++) { 
+		        			$endDays[$i+1]=$i+1;
+		        		}
+		        		echo Html::dropDownList("endDay",null,$endDays,['class'=>'form-control','style'=>'width:30%;']);
 			    	?>
 			    	</div>
 					<label class="control-label" for="contactform-subject">Seleccione las unidades de su consulta:</label>
@@ -111,8 +113,6 @@ $this->params['breadcrumbs'][] = $this->title;
 					
 				</p>
 			<?= Html::endForm()?>
-	      	<div id="Charts">
-	      	</div>
 	      	<script type="text/javascript">
 	        	$('#submitDate').click(function(event) {
 			        $('#Charts').html("starting");
@@ -120,16 +120,49 @@ $this->params['breadcrumbs'][] = $this->title;
 			</script>
 		</div>
 		<div class="col-md-6">
-			<?php 
-
-				$chartmax = new Charts();
-				$chartmax->setOptionClass("col-md-8");
-
+			<?php
+				$startYear=null;
+				$startMonth=null;
+				$startDay=null;
+				$endYear=null;
+				$endMonth=null;
+				$endDay=null;
+				$calcType=null;
+				$unitType=null;
+				if (isset($_GET['startYear'])) {
+					$startYear=$_GET['startYear'];
+				}
+				if (isset($_GET['startMonth'])) {
+					$startMonth=$_GET['startMonth'];
+				}
+				if (isset($_GET['startDay'])) {
+					$startDay=$_GET['startDay'];
+				}
+				if (isset($_GET['endYear'])) {
+					$endYear=$_GET['endYear'];
+				}
+				if (isset($_GET['endMonth'])) {
+					$endMonth=$_GET['endMonth'];
+				}
+				if (isset($_GET['endDay'])) {
+					$endDay=$_GET['endDay'];
+				}
+				if (isset($_GET['calcType'])) {
+					$calcType=$_GET['calcType'];
+				}
+				if (isset($_GET['unitType'])) {
+					$unitType=$_GET['unitType'];
+				}
+				$consumptionWatts = new Consumption($calcType, $startYear, $startMonth, $startDay, $endYear, $endMonth, $endDay, $unitType, Yii::$app->user->id);
+			    $datasetWatts=$consumptionWatts->getData();
+				$chart = new Charts("charid2",$datasetWatts,"col-md-6",false);
+				//$chart->setChartType($chart->type[2]);
+				$chart->setChartTitle("Watts");
 				if(isset($_GET['calcType']) && $_GET['calcType'] == "s"){
 					$chartmax->setChartType($chartmax->type[2]);
 					$chartmax->normalColors();
 				}
-				$chartmax->render();
+				$chart->render();
 			?>
 		</div>
     </div>

@@ -129,6 +129,7 @@ class SiteController extends Controller
     public function actionChartdisplay(){
         return $this->render("chartdisplay");
     }
+    
     public function actionFormulario($mensaje = null)
     {
         return $this->render("formulario", ["mensaje" => $mensaje]);
@@ -142,16 +143,9 @@ class SiteController extends Controller
             $mensaje = "Bien, has enviando tu nombre correctamente: " . $_REQUEST["nombre"];
         }
         $this->redirect(["site/formulario", "mensaje" => $mensaje]);
-
-        $startYear = null;
-        if (isset($_REQUEST["startYear"]))
-        {
-            $mensaje = "Bien, has enviando tu startYear correctamente: " . $_REQUEST["startYear"];
-        }
-        $this->redirect(["site/formulario", "mensaje" => $startYear]);
     }
 
     public function actionValidarformulario(){
-        return $this->render("validarformulario");
+        
     }
 }
