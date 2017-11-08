@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			return days;
 		}
 		function printDays(var type){
-			var days = calculateDays();
+			var days = calculateDays('start');
 	    	for (var i = 0; i < days; i++) {
 	    		Day='<option value='+(i+1)+'>'+(i+1)+'</option>';
 	    	}
@@ -67,6 +67,9 @@ $this->params['breadcrumbs'][] = $this->title;
 		        		}
 		        		echo Html::dropDownList("startMonth",null,$months,['class'=>'form-control','style'=>'width:30%;']);
 		        		$days=array();
+		        		for ($i=0; $i < 31; $i++) { 
+		        			$days[$i+1]=$i+1;
+		        		}
 		        		echo Html::dropDownList("startDay",null,$days,['class'=>'form-control','style'=>'width:30%;']);
 			    		//$startDate= new ChartDateCalc("start");
 			    		//$startDate->render();
@@ -87,6 +90,9 @@ $this->params['breadcrumbs'][] = $this->title;
 		        		}
 		        		echo Html::dropDownList("endMonth",null,$months,['class'=>'form-control','style'=>'width:30%;']);
 		        		$days=array();
+		        		for ($i=0; $i < 31; $i++) { 
+		        			$days[$i+1]=$i+1;
+		        		}
 		        		echo Html::dropDownList("endDay",null,$days,['class'=>'form-control','style'=>'width:30%;']);
 			    		//$endDate= new ChartDateCalc("end");
 			    		//$endDate->render();
