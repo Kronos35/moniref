@@ -9,29 +9,40 @@ use app\assets\ChartDateCalc;
 	
 	
 	// La función 'getData()' obtiene la información y la regresa para ser amacenada en una variable
-    $consumptionWatts = new Consumption("a","2017","10","01","2017","10","31",'w','1');
-    $consumptionVolts = new Consumption("a","2017","10","01","2017","10","31",'v', '1');
-    $consumptionAmps = new Consumption("a","2017","10","01","2017","10","31",'a', '1');
-    $datasetWatts=$consumptionWatts->getData(Yii::$app->user->id);
-    $datasetVolts=$consumptionVolts->getData(Yii::$app->user->id);
-    $datasetAmps=$consumptionAmps->getData(Yii::$app->user->id);
-	
-	// Este es un ejemplo de otra chart en la misma pantalla
-	$charts2 = new Charts("charid2",$datasetWatts,"col-md-3",false);
-	$charts2->setChartType($charts2->type[2]);
-	$charts2->setChartTitle("Watts");
-	$charts2->render();
 
-	$charts3 = new Charts("charid3",$datasetVolts,"col-md-3",true);
-	$charts3->setChartType($charts3->type[2]);
-	// este metodo permite cambiar el nombre a la grafica
-	$charts3->setChartTitle("Volts");
-	$charts3->render();
+	$startYear="";
+	$startMonth="";
+	$startDay="";
+	$startDay="";
+	$endYear="";
+	$endMonth="";	
+	$endDay="";
+	$endDay="";
+	$flag=1;
 
-	$charts4 = new Charts("charid4",$datasetAmps,"col-md-3",true);
-	$charts4->setChartType($charts4->type[2]);
-	$charts4->setChartTitle("Amp");
-	$charts4->render();
+	foreach ($_GET as $key) {
+		if(isset($key)){
+			$flag*=1;
+		}
+		else{
+			$flag*=0;
+			echo "no";
+		}
+	}
+	if ($flag==1) {
+		$startYear=$_GET['startYear'];
+		$startMonth=$_GET['startMonth'];
+		$startDay=$_GET['startDay'];
+		$endYear=$_GET['endYear'];
+		$endMonth=$_GET['endMonth'];
+		$endDay=$_GET['endDay'];
+		$consumptionWatts = new Consumption("a",$startYear,"$startMonth","01","$endYear","$endMonth","$endDay",'w','1');
+	    $datasetWatts=$consumptionWatts->getData(Yii::$app->user->id);
+		$chart = new Charts("charid2",$datasetWatts,"col-md-6",false);
+		//$chart->setChartType($chart->type[2]);
+		$chart->setChartTitle("Watts");
+		$chart->render();
+	}	
 ?>
 </div>
 
