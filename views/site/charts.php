@@ -17,6 +17,33 @@ $this->params['breadcrumbs'][] = $this->title;
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.js"></script>
     <h1><?= Html::encode($this->title) ?></h1>
     <div class="form-group field-contactform-subject required">
+    <script type="text/javascript">
+    	function calculateDays(var type){
+			var y = $('#'+type+'Year').val();
+			var m = $('#'+type+'Month').val();
+			var days = new Date(y,m,1,-1).getDate();
+			return days;
+		}
+		function printDays(var type){
+			var days = calculateDays();
+	    	for (var i = 0; i < days; i++) {
+	    		Day='<option value='+(i+1)+'>'+(i+1)+'</option>';
+	    	}
+			$('#'+type+'Day').html(".$this->selDateID."Day);
+		}
+		$('#startMonth').ready(function() {
+		    printDays('start');
+		});
+	    $('#startMonth').change(function(event) {
+	    	printDays('start');
+	    });
+	    $('#endYear').ready(function(event) {
+	    	printDays('end');
+	    });
+	    $('#endYear').change(function(event) {
+	    	printDays('end');
+	    });
+    </script>
 </div>
 
     <div class="row">
@@ -46,31 +73,7 @@ $this->params['breadcrumbs'][] = $this->title;
 			    	?>
 			    	</div>
 			    	<script type="text/javascript">
-			    		function calculateDays(var type){
-							var y = $('#'+type+'Year').val();
-							var m = $('#'+type+'Month').val();
-							var days = new Date(y,m,1,-1).getDate();
-							return days;
-						}
-						function printDays(var type){
-							var days = calculateDays();
-					    	for (var i = 0; i < days; i++) {
-					    		Day='<option value='+(i+1)+'>'+(i+1)+'</option>';
-					    	}
-							$('#'+type+'Day').html(".$this->selDateID."Day);
-						}
-						$('#startMonth').ready(function() {
-						    printDays('start');
-						});
-					    $('#startMonth').change(function(event) {
-					    	printDays('start');
-					    });
-					    $('#endYear').ready(function(event) {
-					    	printDays('end');
-					    });
-					    $('#endYear').change(function(event) {
-					    	printDays('end');
-					    });
+			    		
 			    	</script>
 			    	<div id="end">
 			    	<?=
@@ -121,14 +124,49 @@ $this->params['breadcrumbs'][] = $this->title;
 		</div>
 		<div class="col-md-6">
 			<?php 
-				$chartmax = new Charts();
-				$chartmax->setOptionClass("col-md-8");
+				$startYear=null;
+				$startMonth=null;
+				$startDay=null;
+				$endYear=null;
+				$endMonth=null;
+				$endDay=null;
+				$calcType=null;
+				$unitType=null;
+				if (isset($_GET['startYear'])) {
+					$startYear=$_GET['startYear'];
+				}
+				if (isset($_GET['startMonth'])) {
+					$startMonth=$_GET['startMonth'];
+				}
+				if (isset($_GET['startDay'])) {
+					$startDay=$_GET['startDay'];
+				}
+				if (isset($_GET['endYear'])) {
+					$endYear=$_GET['endYear'];
+				}
+				if (isset($_GET['endMonth'])) {
+					$endMonth=$_GET['endMonth'];
+				}
+				if (isset($_GET['endDay'])) {
+					$endDay=$_GET['endDay'];
+				}
+				if (isset($_GET['calcType'])) {
+					$calcType=$_GET['calcType'];
+				}
+				if (isset($_GET['unitType'])) {
+					$unitType=$_GET['unitType'];
+				}
+				$consumptionWatts = new Consumption($calcType, $startYear, $startMonth, $startDay, $endYear, $endMonth, $endDay, $unitType, Yii::$app->user->id);
+			    $datasetWatts=$consumptionWatts->getData();
+				$chart = new Charts("charid2",$datasetWatts,"col-md-8",false);
+				//$chart->setChartType($chart->type[2]);
+				$chart->setChartTitle("Watts");
 
 				if(isset($_GET['calcType']) && $_GET['calcType'] == "s"){
-					$chartmax->setChartType($chartmax->type[2]);
-					$chartmax->normalColors();
+					$chart->setChartType($chart->type[2]);
+					$chart->normalColors();
 				}
-				$chartmax->render();
+				$chart->render();
 			?>
 		</div>
     </div>
