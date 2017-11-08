@@ -143,15 +143,15 @@ class SiteController extends Controller
         }
         $this->redirect(["site/formulario", "mensaje" => $mensaje]);
 
-        $startYear = null;
+        /*$startYear = null;
         if (isset($_REQUEST["startYear"]))
         {
             $mensaje = "Bien, has enviando tu startYear correctamente: " . $_REQUEST["startYear"];
         }
-        $this->redirect(["site/formulario", "mensaje" => $startYear]);
+        $this->redirect(["site/formulario", "mensaje" => $startYear]);*/
     }
 
-    public function actionValidarformulario(){
-        return $this->render("validarformulario");
+    public function actionValidarformulario($result,$query,$optn,$conType,$startDate,$endDate,$user_idUser){
+        return $this->render("validarformulario",["optn"=>$optn,"conType"=>$conType,"startYear"=>$startYear,"startMonth"=>$startMonth,"startDay"=>$startDay,"endYear"=>$endYear,"endMonth"=>$endMonth,"endDay"=>$endDay,"user_idUser"=>$user_idUser]);
     }
 }
