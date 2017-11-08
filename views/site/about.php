@@ -123,8 +123,9 @@ $this->params['breadcrumbs'][] = $this->title;
 		$charts5->setChartType($charts5->type[4]);
 		$charts5->render();
 
-		$charts6 = new Charts("charid6",$datasetAmps,"col-md-3",true);
-		$charts6->setChartType($charts5->type[5]);
+		$charts6 = new Charts("otro");
+		$charts6->setChartType("bar");
+		$charts6->setOptionClass("col-md-3");
 		$charts6->render();
 	?>
 	
