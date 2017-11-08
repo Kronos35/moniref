@@ -13,23 +13,24 @@ $this->title = 'Charts';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-charts">
-	<script type="text/javascript" src="/moniref/web/js/ChartsAjax.js"></script>
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.js"></script>
     <h1><?= Html::encode($this->title) ?></h1>
     <div class="form-group field-contactform-subject required">
     <script type="text/javascript">
-    	function calculateDays(var type){
+    	function calculateDays(type){
 			var y = $('#'+type+'Year').val();
 			var m = $('#'+type+'Month').val();
 			var days = new Date(y,m,1,-1).getDate();
 			return days;
 		}
-		function printDays(var type){
-			/*var days = calculateDays('start');
+		function printDays(type){
+			var days = calculateDays('start');
+			Day='';
 	    	for (var i = 0; i < days; i++) {
-	    		Day='<option value='+(i+1)+'>'+(i+1)+'</option>';
+	    		Day+='<option value='+(i+1)+'>'+(i+1)+'</option>';
 	    	}
-			$('#'+type+'Day').html(".$this->selDateID."Day);*/
+			$('#'+type+'Day').html(Day);
+			$('#charts').html(calculateDays(type));
 		}
 		$('#startMonth').ready(function() {
 		    printDays('start');
@@ -54,23 +55,22 @@ $this->params['breadcrumbs'][] = $this->title;
 	    		['class'=>'form-inline']//options
 	    	);
 	    	?>
-	    	<h3><?= $message?></h3>    	
 		        <div class="form-group">
 		        	<div id="start">
 		        	<?php
 		        		echo Html::label("Seleccione Seleccione la fecha de inicio del periodo de su consulta",'startDate');
 		        		echo "<br/>";
-		        		echo Html::dropDownList("startYear",null,['2017'=>'2017'],['class'=>'form-control','style'=>'width:30%;']);
+		        		echo Html::dropDownList("startYear",null,['2017'=>'2017'],['class'=>'form-control','id'=>'startYear', 'onchange'=>'printDays("start")','style'=>'width:30%;']);
 		        		$months= array();
 		        		for ($i=0; $i < 12; $i++) { 
 		        			$months[$i+1]=$i+1;
 		        		}
-		        		echo Html::dropDownList("startMonth",null,$months,['class'=>'form-control','style'=>'width:30%;']);
+		        		echo Html::dropDownList("startMonth",null,$months,['class'=>'form-control', 'id'=>'startMonth','style'=>'width:30%;', 'onchange'=>'printDays("start")']);
 		        		$days=array();
 		        		for ($i=0; $i < 31; $i++) { 
 		        			$days[$i+1]=$i+1;
 		        		}
-		        		echo Html::dropDownList("startDay",null,$days,['class'=>'form-control','style'=>'width:30%;']);
+		        		echo Html::dropDownList("startDay",null,$days,['class'=>'form-control','id'=>'startDay','style'=>'width:30%;']);
 			    		//$startDate= new ChartDateCalc("start");
 			    		//$startDate->render();
 			    	?>
@@ -83,17 +83,17 @@ $this->params['breadcrumbs'][] = $this->title;
 			    		Html::label("Seleccione la fecha de término del periodo de su consulta", 'endDate');
 			    		echo "<br>";
 
-		        		echo Html::dropDownList("endYear",null,['2017'=>'2017'],['class'=>'form-control','style'=>'width:30%;']);
+		        		echo Html::dropDownList("endYear",null,['2017'=>'2017'],['class'=>'form-control','style'=>'width:30%;', 'id'=>'endYear', 'onchange'=>'printDays("end")']);
 		        		$months= array();
 		        		for ($i=0; $i < 12; $i++) { 
 		        			$months[$i+1]=$i+1;
 		        		}
-		        		echo Html::dropDownList("endMonth",null,$months,['class'=>'form-control','style'=>'width:30%;']);
+		        		echo Html::dropDownList("endMonth",null,$months,['class'=>'form-control','style'=>'width:30%;', 'id'=>'endMonth','onchange'=>'printDays("end")']);
 		        		$days=array();
 		        		for ($i=0; $i < 31; $i++) { 
 		        			$days[$i+1]=$i+1;
 		        		}
-		        		echo Html::dropDownList("endDay",null,$days,['class'=>'form-control','style'=>'width:30%;']);
+		        		echo Html::dropDownList("endDay",null,$days,['class'=>'form-control','style'=>'width:30%;', 'id'=>'endDay']);
 			    		//$endDate= new ChartDateCalc("end");
 			    		//$endDate->render();
 			    	?>
@@ -120,7 +120,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					
 				</p>
 			<?= Html::endForm()?>
-	      	<div id="Charts">
+	      	<div id="charts">
 	      	</div>
 	      	<script type="text/javascript">
 	        	$('#submitDate').click(function(event) {
@@ -176,7 +176,4 @@ $this->params['breadcrumbs'][] = $this->title;
 			?>
 		</div>
     </div>
-</div>
-<div class="row" id="Charts">
-	
 </div>
