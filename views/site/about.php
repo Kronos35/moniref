@@ -80,15 +80,12 @@ $this->params['breadcrumbs'][] = $this->title;
 	// El constructor de 'Consumption' pide 8 datos el primero siendo el cálculo que va a arrojar "consumo promedio" ("a") o consumo total ("s") para cada "apliance", los siguientes 3 componen la fecha inicial desde la cual se visualizará la información, los otros 3 parámetros la fecha 'tope' finalmente el tipo de dato que se obtendrá ya sea 'amps' (a), 'volts' (v) y 'wats' (w)
 	
 	// La función 'getData()' obtiene la información y la regresa para ser amacenada en una variable
-    $consumptionWatts = new Consumption("a","2017","10","01","2017","10","31",'w','1');
+    $consumptionWatts = new Consumption("a","2017","10","01","2018","10","31",'w',Yii::$app->user->id);
     $consumptionVolts = new Consumption("a","2017","10","01","2017","10","31",'v','1');
     $consumptionAmps = new Consumption("a","2017","10","01","2017","10","31",'a','1');
     $datasetWatts=$consumptionWatts->getData(Yii::$app->user->id);
     $datasetVolts=$consumptionVolts->getData(Yii::$app->user->id);
     $datasetAmps=$consumptionAmps->getData(Yii::$app->user->id);
-
-    print_r($datasetVolts);
-    die();
 	
 	// clase de charts //
 	// requiere llamar esto: "use app\assets\Charts;" //
@@ -104,7 +101,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
 	// Este es un ejemplo de otra chart en la misma pantalla
 	$charts2 = new Charts("charid2",$datasetWatts,"col-md-3",false);
-	$charts2->setChartType($charts2->type[2]);
 	$charts2->setChartTitle("Watts");
 	$charts2->render();
 
