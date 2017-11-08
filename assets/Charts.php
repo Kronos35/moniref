@@ -20,6 +20,9 @@ class Charts{
        $this->optionclass = $optionclass;
        $this->data = $data;
        $this->rand = $rand;
+       if($rand==false){
+       		$this->sortData();
+       }
        $this->chartid = $chartid;
        $this->charttype = "doughnut";
        $this->title = "Mi gráfica";
