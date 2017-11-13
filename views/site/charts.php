@@ -27,10 +27,11 @@ $this->params['breadcrumbs'][] = $this->title;
 			var days = calculateDays('start');
 			Day='';
 	    	for (var i = 0; i < days; i++) {
+	    		
 	    		Day+='<option value='+(i+1)+'>'+(i+1)+'</option>';
+
 	    	}
 			$('#'+type+'Day').html(Day);
-			$('#charts').html(calculateDays(type));
 		}
 		$('#startMonth').ready(function() {
 		    printDays('start');
@@ -60,19 +61,13 @@ $this->params['breadcrumbs'][] = $this->title;
 		        	<?php
 		        		echo Html::label("Seleccione Seleccione la fecha de inicio del periodo de su consulta",'startDate');
 		        		echo "<br/>";
-		        		echo Html::dropDownList("startYear",null,['2017'=>'2017'],['class'=>'form-control','id'=>'startYear', 'onchange'=>'printDays("start")','style'=>'width:30%;']);
+		        		echo Html::dropDownList("startYear",(isset($_GET['startYear'])?$_GET['startYear']:null),['2017'=>'2017'],['class'=>'form-control','id'=>'startYear', 'onchange'=>'printDays("start")','style'=>'width:30%;']);
 		        		$months= array();
 		        		for ($i=0; $i < 12; $i++) { 
 		        			$months[$i+1]=$i+1;
 		        		}
-		        		echo Html::dropDownList("startMonth",null,$months,['class'=>'form-control', 'id'=>'startMonth','style'=>'width:30%;', 'onchange'=>'printDays("start")']);
-		        		$days=array();
-		        		for ($i=0; $i < 31; $i++) { 
-		        			$days[$i+1]=$i+1;
-		        		}
-		        		echo Html::dropDownList("startDay",null,$days,['class'=>'form-control','id'=>'startDay','style'=>'width:30%;']);
-			    		//$startDate= new ChartDateCalc("start");
-			    		//$startDate->render();
+		        		echo Html::dropDownList("startMonth",(isset($_GET['startMonth'])?$_GET['startMonth']:null),$months,['class'=>'form-control', 'id'=>'startMonth','style'=>'width:30%;', 'onchange'=>'printDays("start")']);
+		        		echo Html::dropDownList("startDay",null,array(),['class'=>'form-control','id'=>'startDay','style'=>'width:30%;']);
 			    	?>
 			    	</div>
 			    	<script type="text/javascript">
@@ -83,35 +78,28 @@ $this->params['breadcrumbs'][] = $this->title;
 			    		Html::label("Seleccione la fecha de término del periodo de su consulta", 'endDate');
 			    		echo "<br>";
 
-		        		echo Html::dropDownList("endYear",null,['2017'=>'2017'],['class'=>'form-control','style'=>'width:30%;', 'id'=>'endYear', 'onchange'=>'printDays("end")']);
+		        		echo Html::dropDownList("endYear",(isset($_GET['endYear'])?$_GET['endYear']:null),['2017'=>'2017'],['class'=>'form-control','style'=>'width:30%;', 'id'=>'endYear', 'onchange'=>'printDays("end")']);
 		        		$months= array();
 		        		for ($i=0; $i < 12; $i++) { 
 		        			$months[$i+1]=$i+1;
 		        		}
-		        		echo Html::dropDownList("endMonth",null,$months,['class'=>'form-control','style'=>'width:30%;', 'id'=>'endMonth','onchange'=>'printDays("end")']);
-		        		$days=array();
-		        		for ($i=0; $i < 31; $i++) { 
-		        			$days[$i+1]=$i+1;
-		        		}
-		        		echo Html::dropDownList("endDay",null,$days,['class'=>'form-control','style'=>'width:30%;', 'id'=>'endDay']);
+		        		echo Html::dropDownList("endMonth",(isset($_GET['endMonth'])?$_GET['endMonth']:null),$months,['class'=>'form-control','style'=>'width:30%;', 'id'=>'endMonth','onchange'=>'printDays("end")']);
+		        		echo Html::dropDownList("endDay",null,array(),['class'=>'form-control','style'=>'width:30%;', 'id'=>'endDay']);
 			    		//$endDate= new ChartDateCalc("end");
 			    		//$endDate->render();
 			    	?>
 			    	</div>
 					<label class="control-label" for="contactform-subject">Seleccione las unidades de su consulta:</label>
 					<br>
-			        <select id="unitType" name="unitType" class='form-control' style='width: 30%;'>
-			        	<option value="w">Watts</option>
-			        	<option value="a">Amperes</option>
-			        	<option value="v">Volts</option>
-			        </select>
+					<?php
+						echo Html::dropDownList("unitType",(isset($_GET['unitType'])?$_GET['unitType']:null), ['w'=>'Watts','a'=>'Amperes','v'=>'Volts'], ['class'=>'form-control','style'=>'width:30%;', 'id'=>'unitType']);
+					?>
 			        <br>
 			        <label class="control-label" for="contactform-subject">Seleccione el tipo de consulta:</label>
 			        <br>
-			        <select id="calcType" name="calcType" class='form-control' style='width: 30%;'>
-			        	<option value="a">Promedio</option>
-			        	<option value="s">Total</option>
-			        </select>
+			        <?php
+						echo Html::dropDownList("calcType",(isset($_GET['calcType'])?$_GET['calcType']:null), ['a'=>'Promedio','s'=>'Total'], ['class'=>'form-control','style'=>'width:30%;', 'id'=>'calcType']);
+					?>
 		        </div>
 
 		        <p>
@@ -123,9 +111,6 @@ $this->params['breadcrumbs'][] = $this->title;
 	      	<div id="charts">
 	      	</div>
 	      	<script type="text/javascript">
-	        	$('#submitDate').click(function(event) {
-			        $('#Charts').html("starting");
-			    });
 			</script>
 		</div>
 		<div class="col-md-6">
