@@ -38,7 +38,7 @@ AppAsset::register($this);
         echo Nav::widget([
             'options' => ['class' => 'navbar-nav navbar-right'],
             'items' => [
-                ['label' => 'Inicio', 'url' => ['/site/index']],
+                ['label' => 'Home', 'url' => ['/site/index']],
                 ['label' => 'About', 'url' => ['/site/about']],
                 ['label' => 'Contact', 'url' => ['/site/contact']],
                 ['label' => 'Login', 'url' => ['/site/login']]
@@ -50,7 +50,7 @@ AppAsset::register($this);
             'options' => ['class' => 'navbar-nav navbar-right'],
             'items' => [
                 ['label' => 'Charts', 'url' => ['/site/charts']],
-                ['label' => 'Perfil', 'url' => ['/user/index']],
+                ['label' => 'Profile', 'url' => ['/user/index']],
                 '<li>'
                     . Html::beginForm(['/site/logout'], 'post')
                     . Html::submitButton(
