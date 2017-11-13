@@ -41,7 +41,6 @@ AppAsset::register($this);
                 ['label' => 'Inicio', 'url' => ['/site/index']],
                 ['label' => 'About', 'url' => ['/site/about']],
                 ['label' => 'Contact', 'url' => ['/site/contact']],
-                ['label' => 'Charts', 'url' => ['/site/charts']],
                 ['label' => 'Login', 'url' => ['/site/login']]
             ],
         ]);
@@ -50,6 +49,7 @@ AppAsset::register($this);
         echo Nav::widget([
             'options' => ['class' => 'navbar-nav navbar-right'],
             'items' => [
+                ['label' => 'Charts', 'url' => ['/site/charts']],
                 ['label' => 'Perfil', 'url' => ['/user/index']],
                 '<li>'
                     . Html::beginForm(['/site/logout'], 'post')
@@ -69,6 +69,10 @@ AppAsset::register($this);
 
     <div class="container">
         <?= Breadcrumbs::widget([
+            'homeLink' => [ 
+                'label' => "Home",
+                'url' => Yii::$app->user->isGuest?Yii::$app->homeUrl:"?r=user/index",
+            ],
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
         <?= $content ?>
@@ -77,7 +81,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+        <p class="pull-left">&copy; Moniref Corp <?= date('Y') ?></p>
 
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>

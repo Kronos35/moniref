@@ -63,6 +63,11 @@ class SiteController extends Controller
         return $this->render('index');
     }
 
+    public function actionPruebasmarco()
+    {
+        return $this->render('pruebasmarco');
+    }
+
     /**
      * Login action.
      *
