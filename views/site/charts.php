@@ -1,7 +1,6 @@
 <?php
 
 /* @var $this yii\web\View */
-
 use yii\helpers\Html;
 use yii\helpers\Url;
 use app\models\Consumptionregistry;
@@ -61,7 +60,19 @@ $this->params['breadcrumbs'][] = $this->title;
 		        	<?php
 		        		echo Html::label("Seleccione Seleccione la fecha de inicio del periodo de su consulta",'startDate');
 		        		echo "<br/>";
-		        		echo Html::dropDownList("startYear",(isset($_GET['startYear'])?$_GET['startYear']:null),['2017'=>'2017'],['class'=>'form-control','id'=>'startYear', 'onchange'=>'printDays("start")','style'=>'width:30%;']);
+
+		        		/*****Calculo de los años*****/
+		        		$tYear=date('Y');		        		
+		        		$dropYear = array();
+		        		if ($tYear>2017) {
+		        			for ($i=2017; $i <= $tYear; $i++) { 
+		        				$dropYear[$i]=$i;
+		        			}
+		        		}
+		        		else {
+		        			$dropYear[2017]=2017;
+		        		}
+		        		echo Html::dropDownList("startYear",(isset($_GET['startYear'])?$_GET['startYear']:null),$dropYear,['class'=>'form-control','id'=>'startYear', 'onchange'=>'printDays("start")','style'=>'width:30%;']);
 		        		$months= array();
 		        		for ($i=0; $i < 12; $i++) { 
 		        			$months[$i+1]=$i+1;
@@ -78,15 +89,13 @@ $this->params['breadcrumbs'][] = $this->title;
 			    		Html::label("Seleccione la fecha de término del periodo de su consulta", 'endDate');
 			    		echo "<br>";
 
-		        		echo Html::dropDownList("endYear",(isset($_GET['endYear'])?$_GET['endYear']:null),['2017'=>'2017'],['class'=>'form-control','style'=>'width:30%;', 'id'=>'endYear', 'onchange'=>'printDays("end")']);
+		        		echo Html::dropDownList("endYear",(isset($_GET['endYear'])?$_GET['endYear']:null),$dropYear,['class'=>'form-control','style'=>'width:30%;', 'id'=>'endYear', 'onchange'=>'printDays("end")']);
 		        		$months= array();
 		        		for ($i=0; $i < 12; $i++) { 
 		        			$months[$i+1]=$i+1;
 		        		}
 		        		echo Html::dropDownList("endMonth",(isset($_GET['endMonth'])?$_GET['endMonth']:null),$months,['class'=>'form-control','style'=>'width:30%;', 'id'=>'endMonth','onchange'=>'printDays("end")']);
 		        		echo Html::dropDownList("endDay",null,array(),['class'=>'form-control','style'=>'width:30%;', 'id'=>'endDay']);
-			    		//$endDate= new ChartDateCalc("end");
-			    		//$endDate->render();
 			    	?>
 			    	</div>
 					<label class="control-label" for="contactform-subject">Seleccione las unidades de su consulta:</label>

@@ -20,6 +20,7 @@ class Consumption{
 			$startDateYYYY=date("Y");
 		}
 		if (is_null($startDateMM)) {
+			//cuando el arreglo entra como null el constructor resta un mes a la fecha actual
 			$startDateMM=date('m', strtotime('-1 month'));
 		}
 		if (is_null($startDateDD)) {
@@ -89,7 +90,6 @@ class Consumption{
         	$noRegistry=array("No stored registries"=>'0');
         	return $noRegistry;
         }
-        
     }
 }	
 ?>
