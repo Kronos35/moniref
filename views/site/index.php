@@ -4,7 +4,7 @@
 
 $this->title = 'Moniref';
 use yii\helpers\Html;
-use yii\bootstrap\Carousel ;
+use yii\bootstrap\Carousel;
 
 ?>
 <div class="site-index">
@@ -43,9 +43,11 @@ use yii\bootstrap\Carousel ;
             ]);
         ?>
 
-        <p><?php 
-            if(Yii::$app->user->isGuest) echo Html::a("Signup here",["/user/create"],["class"=>"btn btn-success"]); 
-        ?></p>
+        <div class="row">
+            <br> <br> <?php 
+                if(Yii::$app->user->isGuest) echo Html::a("Signup here",["/user/create"],["class"=>"btn btn-success"]); 
+            ?>
+        </div>
     </div>
 
     <div class="body-content">

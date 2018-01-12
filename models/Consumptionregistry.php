@@ -32,7 +32,7 @@ class Consumptionregistry extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['apliance_idApliance', 'watts', 'amps', 'volts', 'date'], 'required'],
+            [['apliance_idApliance', 'watts', 'amps', 'volts', ], 'required'],
             [['apliance_idApliance'], 'integer'],
             [['watts', 'amps', 'volts'], 'number'],
             [['date'], 'safe'],

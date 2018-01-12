@@ -4,6 +4,7 @@
 use yii\helpers\Html;
 use yii\helpers\Url;
 use app\models\Consumptionregistry;
+use app\models\User;
 use app\assets\Charts;
 use app\assets\Consumption;
 use app\assets\ChartDateCalc;
@@ -101,7 +102,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					<label class="control-label" for="contactform-subject">Seleccione las unidades de su consulta:</label>
 					<br>
 					<?php
-						echo Html::dropDownList("unitType",(isset($_GET['unitType'])?$_GET['unitType']:null), ['w'=>'Watts','a'=>'Amperes','v'=>'Volts'], ['class'=>'form-control','style'=>'width:30%;', 'id'=>'unitType']);
+						echo Html::dropDownList("unitType",(isset($_GET['unitType'])?$_GET['unitType']:null), ['w'=>'Watts','a'=>'Amperes','v'=>'Volts', 'price'=>'price'], ['class'=>'form-control','style'=>'width:30%;', 'id'=>'unitType']);
 					?>
 			        <br>
 			        <label class="control-label" for="contactform-subject">Seleccione el tipo de consulta:</label>
@@ -150,19 +151,41 @@ $this->params['breadcrumbs'][] = $this->title;
 				if (isset($_GET['endDay'])) {
 					$endDay=$_GET['endDay'];
 				}
-				if (isset($_GET['calcType'])) {
-					$calcType=$_GET['calcType'];
-				}
 				if (isset($_GET['unitType'])) {
-					$unitType=$_GET['unitType'];
+					$unitType=$_GET['unitType']=='price'?'w':$_GET['unitType'];
 				}
+				if (isset($_GET['calcType'])) {
+					$calcType= $_GET['unitType']=='price'?'s':$_GET['unitType'];
+				}
+				
 				$consumptionWatts = new Consumption($calcType, $startYear, $startMonth, $startDay, $endYear, $endMonth, $endDay, $unitType, Yii::$app->user->id);
 			    $datasetWatts=$consumptionWatts->getData();
-				$chart = new Charts("charid2",$datasetWatts,"col-md-8",false);
-				//$chart->setChartType($chart->type[2]);
-				$chart->setChartTitle("Watts");
 
-				if(isset($_GET['calcType']) && $_GET['calcType'] == "s"){
+			    
+			    $chart = "";
+			    if (isset($_GET['unitType']) && $_GET['unitType']=='price') {
+			    	$data = array();
+				    $user = User::findOne(["idUser"=>Yii::$app->user->id]);
+				    foreach ($datasetWatts as $key => $value) {
+				    	$data[$key] = ($value/1000) * $user->Tarifa;
+				    }
+				    $chart = new Charts("charid2",$data,"col-md-8",false);
+			    }
+			    else{
+			    	$chart = new Charts("charid2",$datasetWatts,"col-md-8",false);
+			    }
+
+				if(isset($_GET['unitType']) && $_GET['unitType'] == "a"){
+					$chart->setChartTitle("ampers");
+				}
+				else if(isset($_GET['unitType']) && $_GET['unitType'] == "w"){
+					$chart->setChartTitle("watts");
+				}
+				else if(isset($_GET['unitType']) && $_GET['unitType'] == "v"){
+					$chart->setChartTitle("volts");
+				}
+
+				if(isset($_GET['calcType']) && $_GET['calcType'] == "s" && $_GET['unitType']!='price'){
 					$chart->setChartType($chart->type[2]);
 					$chart->normalColors();
 				}

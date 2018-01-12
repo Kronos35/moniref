@@ -8,6 +8,9 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\Consumptionregistry;
+use app\models\Apliance;
+use app\models\ProtoHasApliance;
 
 class SiteController extends Controller
 {
@@ -66,6 +69,29 @@ class SiteController extends Controller
     public function actionPruebasmarco()
     {
         return $this->render('pruebasmarco');
+    }
+    public function actionPruebaskarla(){
+        if(isset($_GET['watt'],$_GET['amp'],$_GET['volt'])){
+            $asd = ProtoHasApliance::findOne(['disconnectionDate' => null]);
+
+            $app = Apliance::findOne(["idApliance"=>$asd["apliance_idApliance"]]);
+            $model = new Consumptionregistry();
+            $model->apliance_idApliance = $app->idApliance;
+            $model->watts = $_GET['watt'];
+            $model->amps = $_GET['amp'];
+            $model->volts = $_GET['volt'];
+            if($model->save()){
+                echo "Guardado";
+            }
+            else{
+                print_r($model);
+            }
+        }
+        else{
+            foreach(Consumptionregistry::find()->where(["apliance_idApliance"=>23])->all() as $model){
+                echo "watt: " . $model->watts  . " amps: " . $model->amps . " volts:" . $model->volts . "<br>";
+            }
+        }
     }
 
     /**
